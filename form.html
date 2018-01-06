@@ -1,0 +1,1750 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Virtual Terminal | iFinSwitch</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <!-- Bootstrap CSS -->
+  <link href="node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- FontAwesome CSS -->
+  <link href="node_modules/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+
+  <!-- Custom CSS -->
+  <link href="css/style.css" rel="stylesheet">
+
+
+  
+
+  
+  <!-- Fallback font "Nunito" -->
+  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+<style>
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+
+/* Modal Content */
+.modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 15px;
+    border: 1px solid #888;
+    width: 60%;
+	padding-bottom: 0px;
+}
+
+/* The Close Button */
+.close {
+    color: #000000;
+    float: right;
+    font-size: 32px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+</style>
+</head>
+<body class="edgepay" onload="processUser();">
+
+<!-- Side menu and main content -->
+<div class="container-fluid gradient-bg">
+  <div class="row">
+
+    <!-- Side menu -->
+    <div class="nav-side-menu col-xs-12 col-sm-3 col-md-2">
+
+      <!-- Logo -->
+      <div class="logo-container">
+        <div class="logo"></div>
+      </div>
+      <i class="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content"></i>
+      <!-- /Logo -->
+
+      <!-- Navigation -->
+      <div class="menu-list">
+        <ul id="menu-content" class="menu-content collapse out">
+
+          <li>
+            <a href="wip.html">Dashboard</a>
+          </li>
+
+          <li data-toggle="collapse" data-target="#reports" class="collapsed">
+            <a href="#">Reports<span class="arrow"></span></a>
+          </li>
+
+          <li class="has-sub-menu">
+            <ul class="sub-menu collapse" id="reports">
+              <li><a href="table.html">Settled Transactions</a></li>
+              <li><a href="all.html">Batch Transactions</a></li>
+            </ul>
+          </li>
+
+          <li data-toggle="collapse" data-target="#payments" class="collapsed">
+            <a href="#">Payments<span class="arrow"></span></a>
+          </li>
+
+          <li class="has-sub-menu">
+            <ul class="sub-menu collapsed active" id="payments">
+              <li class="active"><a href="form.html">Virtual Terminal</a></li>
+            </ul>
+          </li>
+
+          <li>
+            <a href="wip.html">Recurring</a>
+          </li>
+
+          <li>
+            <a href="wip.html">Batch Pay</a>
+          </li>
+         <li>
+            <a href="admin.html">Admin</a>
+          </li>
+
+        </ul>
+      </div>
+      <!-- /Navigation -->
+
+    </div>
+    <!-- /Side menu -->
+	<script language="JavaScript">
+  function processUser()
+  {
+    var parameters = location.search.substring(1).split("&");
+
+    var temp = parameters[0].split("=");
+    l = unescape(temp[1]);
+    document.getElementById("userName").innerHTML = l;
+	setUser(l);   
+  }
+
+
+   
+function setUser(userid){
+	if(userid=='undefined'){
+		userid=localStorage.getItem("userId");
+	}
+
+document.getElementById("userid").innerHTML = userid;
+
+	if(userid=='1234567890987655'){	    
+		document.getElementById("userName").innerHTML = 'Peter Merchant<span class="arrow"></span>';
+		document.getElementById("userTitle").innerHTML = 'Welcome, Steve Shoes';
+		document.getElementById("userImg").src='images/placeholder-user1.jpg';
+	}else if(userid=='1234567890987656'){
+		document.getElementById("userName").innerHTML = 'Herry Merchant<span class="arrow"></span>';
+		document.getElementById("userTitle").innerHTML = 'Welcome, 7 Oclock Pizza';
+		document.getElementById("userImg").src='images/placeholder-user2.jpg';
+	}else if(userid=='1234567890987657'){
+		document.getElementById("userName").innerHTML = 'Denial Merchant<span class="arrow"></span>';
+		document.getElementById("userTitle").innerHTML = 'Welcome, Titan Watch';
+		document.getElementById("userImg").src='images/placeholder-user3.jpg';
+	}else{
+		document.getElementById("userName").innerHTML = 'John Merchant<span class="arrow"></span>';
+		document.getElementById("userTitle").innerHTML = 'Welcome, Intel Mobile';
+		document.getElementById("userImg").src='images/placeholder-user0.jpg';
+	}
+	
+	if(typeof(Storage) !== "undefined") {
+		localStorage.setItem("userId", userid);
+		localStorage.setItem("userName", document.getElementById("userName").innerHTML);
+		localStorage.setItem("userTitle", document.getElementById("userTitle").innerHTML);
+		localStorage.setItem("userImg", document.getElementById("userImg").src);
+	 }
+}
+</script>
+    <!-- Page content -->
+    <div id="page-content-wrapper" class="col-xs-12 col-sm-9 col-md-10">
+      <div class="container-fluid">
+        <!-- User -->
+		<div class="col-sm-4" ><h1 class="page-title">Virtual Terminal</h1></div>
+        <div class="row user">
+		
+          <div class="btn-group">
+            <button type="button"
+                    class="btn dropdown-toggle"
+                    data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false">
+              <img id="userImg" src="images/placeholder-user.jpg" class="image">
+              <p id="userName" class="name">John Merchant<span class="arrow"></span></p>
+              <span class="sr-only">Toggle Dropdown</span>
+            </button>
+            <ul class="dropdown-menu">
+              <li><a href="#">Action</a></li>
+              <li><a href="#">Another action</a></li>
+              <li><a href="#">Something else here</a></li>
+              <li role="separator" class="divider"></li>
+              <li><a href="login.html">Log Out</a></li>
+            </ul>
+          </div>
+        </div>
+        <!-- /User -->
+
+        <!-- Page heading -->
+        <div class="row page-heading">
+
+          <!-- Title -->
+          <div class="title">
+            <h3 class="section-title">Processing Center</h3>
+            
+          </div>
+          <!-- /Title -->
+
+          <!-- Control container -->
+          <div class="control-container">
+
+            <!-- MID section -->
+            <div class="control">
+              <p class="mid-label" id="userTitle">Welcome, Steve's Shoes #1</p> 
+              <div class="btn-group mid">
+                <button type="button" class="btn">MID</button>
+                <button type="button"
+                        class="btn dropdown-toggle"
+                        data-toggle="dropdown"
+                        aria-haspopup="true"
+                        aria-expanded="false">
+                  <div class="id-num" id="userid">1234567890987654<span class="arrow1"></span></div>
+                  <span class="sr-only">Toggle Dropdown</span>
+                </button>
+                
+              </div>
+            </div>
+            <!-- /MID section -->
+
+          </div>
+          <!-- Control container -->
+
+        </div>
+        <!-- /Page heading -->
+
+        <!-- Tabs -->
+        <div class="row tab-element">
+          <ul class="nav nav-tabs nav-justified">
+            <li role="presentation" class="active">
+              <a data-toggle="tab" href="#authorization">Authorization</a>
+            </li>
+            <li role="presentation">
+              <a data-toggle="tab" href="#Capture">Capture</a>
+            </li>
+            <li role="presentation">
+              <a data-toggle="tab" href="#Refund">Refund</a>
+            </li>
+          </ul>
+
+          <div class="tab-content clearfix">
+
+            <!-- Tab content with a panel and an accordion -->
+            <div class="tab-pane active" id="authorization">
+
+              
+
+                <div class="container-fluid">
+                  <div class="row">
+<form method="post" action="">
+                    <div class="col-xs-12 col-md-6 left">
+                      <div class="panel panel-default">
+                        <div class="panel-heading">
+                          <h3 class="panel-title">Payment Details</h3>
+                        </div>
+                        <div class="panel-body">
+                          <div class="form-group row">
+                            <label for="inputAmount" class="col-sm-4 col-form-label" >Amount</label>
+                            <div class="col-sm-8">
+                              <!--
+                                Using "autofocus" for page load.
+                                Also using "tabindex" for tab key navigation flow.
+                              -->
+                              <input type="text" class="form-control currency-input" style="font-size:18px;" id="inputAmountId" placeholder="$0.00" tabindex="1" autofocus required>
+                            </div>
+                          </div>
+						  
+						  
+						     <div class="form-group row">
+                                <label class="col-sm-4 col-form-label">
+                                  Card Data Source
+                                </label>
+                                <div class="col-sm-8">
+                                  <div class="radio">
+                                    <label for="radiooption1">
+                                      <input class="custom-radio"  onclick="isCardEnable(true);" type="radio" name="optionsGroup" id="radioOption1" value="radioOption1" checked required>
+                                      Manual
+                                    </label>
+                                  </div>
+                                  <div class="radio">
+                                    <label for="radioOption2">
+                                      <input class="custom-radio"  onclick="isCardEnable(false);" type="radio" name="optionsGroup" id="radioOption2" value="radioOption2" required>
+                                      SWIPE/Insert
+                                    </label>
+                                  </div>
+                                </div>
+                              </div>
+                          <div class="form-group row">
+                            <label for="inputCard" class="col-sm-4 col-form-label">Card Number</label>
+                            <div class="col-sm-8">
+                              <input type="text" class="form-control" id="inputCard" placeholder="xxxxxxxxxxxxxxxx" tabindex="2">
+                            </div>
+                          </div>
+                          <div class="form-group row">
+                            <label for="inputDate" class="col-sm-4 col-form-label">Expiration Date</label>
+                            <div class="col-sm-8">
+                              <input type="txet" class="form-control" id="cardExp" placeholder="mmyy" tabindex="3" required>
+                            </div>
+                          </div>
+                          <div class="form-group row">
+                            <label for="inputCVV" class="col-sm-4 col-form-label">CVV Code</label>
+                            <div class="col-sm-8">
+                              <input type="text" class="form-control" id="inputCVV" tabindex="4" required>
+                            </div>
+                          </div>
+						  <div class="form-group row">
+                            <label for="inputZip" class="col-sm-4 col-form-label">Billing Address</label>
+                            <div class="col-sm-8">
+                              <input type="text" class="form-control" id="billingAddress" tabindex="5" placeholder="Address" required>
+                            </div>
+                          </div>
+						  <div class="form-group row">
+                            <label for="inputZip" class="col-sm-4 col-form-label">Billing State</label>
+                            <div class="col-sm-8">
+                              <input type="text" class="form-control" id="billingState" tabindex="5" placeholder="State" required>
+                            </div>
+                          </div>
+						  <div class="form-group row">
+                            <label for="inputZip" class="col-sm-4 col-form-label">Billing ZIP </label>
+                            <div class="col-sm-8">
+                              <input type="text" class="form-control" id="inputZip" tabindex="5" placeholder="Zip Code" required>
+                            </div>
+                          </div>
+						
+							  <div class="form-group row">
+                                <label class="col-sm-4 col-form-label">
+                                  Capture Too
+                                </label>
+                                <div class="col-sm-8">
+								  <div class="radio">
+                                    <label for="radioOption3">
+                                      <input class="custom-radio" type="radio" name="optionsGroup1" id="radioOption2" value="radioOption2" required>
+                                      Yes
+                                    </label>
+                                  </div>
+								  <div class="radio">
+                                    <label for="radioOption4">
+                                      <input class="custom-radio" type="radio" name="optionsGroup1" id="radioOption2" value="radioOption2" required>
+                                      No
+                                    </label>
+                                  </div>
+                                </div>
+                              </div>
+							   							   
+                          
+                        </div>
+                      </div>
+
+                      <div class="tab-action-md">
+                        <input  type="reset" class="btn btn-secondary" value="Clear Form"></input>
+                        <button type="button" class="btn btn-primary" tabindex="6" id="myBtn" >Submit</button>
+                      </div>
+                    </div>
+
+                    <div class="col-xs-12 col-md-6 right">
+                      <div class="panel-group" id="accordion">
+                        <div class="panel panel-default">
+                          <div class="panel-heading">
+                            <h4 class="panel-title">
+                              <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">
+                                Optional Data
+                              </a>
+                            </h4>
+                          </div>
+                          <div id="collapse1" class="panel-collapse collapse in">
+                            <div class="panel-body">
+
+                              <div class="form-group row">
+                                <label for="inputMerchantData1" class="col-sm-4 col-form-label">Merchant Data 1</label>
+                                <div class="col-sm-8">
+                                  <input type="text" class="form-control" id="inputMerchantData1" placeholder="">
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <label for="inputMerchantData2" class="col-sm-4 col-form-label">Order Number</label>
+                                <div class="col-sm-8">
+                                  <input type="text" class="form-control" id="inputMerchantData2" placeholder="xxxxxxxxxxxxxxxx">
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <label for="inputCustomerName" class="col-sm-4 col-form-label">Customer Name</label>
+                                <div class="col-sm-8">
+                                  <input type="text" class="form-control" id="inputCustomerName" placeholder="Customer Name">
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <label for="inputCustomerAddress" class="col-sm-4 col-form-label">Customer Address</label>
+                                <div class="col-sm-8">
+                                  <input type="text" class="form-control" id="inputCustomerAddress">
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <label for="inputCustomerZip" class="col-sm-4 col-form-label">Customer Code</label>
+                                <div class="col-sm-8">
+                                  <input type="text" class="form-control" id="inputCustomerZip">
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <label for="inputProductDescription" class="col-sm-4 col-form-label">Product Description</label>
+                                <div class="col-sm-8">
+                                  <input type="text" class="form-control" id="inputProductDescription">
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <label class="col-sm-4 col-form-label">
+                                  Recurring
+                                </label>
+                                <div class="col-sm-8">
+                                  <div class="checkbox">
+                                    <label for="checkboxRecurring">
+                                      <input class="custom-checkbox" type="checkbox" id="checkboxRecurring" value="checkboxRecurring">
+                                    </label>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <label for="inputTaxAmount" class="col-sm-4 col-form-label">Tax Amount</label>
+                                <div class="col-sm-8">
+                                  <input type="text" class="form-control" id="inputTaxAmount">
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <label for="inputCurrency" class="col-sm-4 col-form-label">Currency</label>
+                                <div class="col-sm-8">
+                                  <div class="btn-group">
+                                    <button type="button"
+                                            class="btn dropdown-toggle"
+                                            data-toggle="dropdown"
+                                            aria-haspopup="true"
+                                            aria-expanded="false"
+                                            id="inputCurrency">
+                                      <div>USD<span class="arrow"></span></div>
+                                      <span class="sr-only">Toggle Dropdown</span>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                      <li>
+                                        <a href="#">USD</a>
+                                      </li>
+                                      <li>
+                                        <a href="#">CAD</a>
+                                      </li>
+                                      <li>
+                                        <a href="#">EUR</a>
+                                      </li>
+                                      <li>
+                                        <a href="#">GBR</a>
+                                      </li>
+                                    </ul>
+                                  </div>
+                                </div>
+                              </div>
+
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="panel panel-default">
+                          <div class="panel-heading">
+                            <h4 class="panel-title">
+                              <a data-toggle="collapse" data-parent="#accordion" href="#collapse4" class="collapsed">
+                                Level II
+                              </a>
+                            </h4>
+                          </div>
+                          <div id="collapse4" class="panel-collapse collapse">
+                            <div class="panel-body">
+                              <div>
+                                <div class="panel-body">
+								<div class="form-group row">
+                                <label class="col-sm-4 col-form-label">
+                                  Options Fields
+                                </label>
+                                <div class="col-sm-8">
+                                  <div class="radio">
+                                    <label for="radiooption1">
+                                      <input class="custom-radio" type="radio" name="optionsGroup" id="radioOption1" value="radioOption1" checked>
+                                      Healthcare
+                                    </label>
+                                  </div>
+                                  <div class="radio">
+                                    <label for="radioOption2">
+                                      <input class="custom-radio" type="radio" name="optionsGroup" id="radioOption2" value="radioOption2">
+                                      Level1
+                                    </label>
+                                  </div>
+								  <div class="radio">
+                                    <label for="radioOption3">
+                                      <input class="custom-radio" type="radio" name="optionsGroup" id="radioOption2" value="radioOption2">
+                                      Level2
+                                    </label>
+                                  </div>
+								  <div class="radio">
+                                    <label for="radioOption4">
+                                      <input class="custom-radio" type="radio" name="optionsGroup" id="radioOption2" value="radioOption2">
+                                      None
+                                    </label>
+                                  </div>
+                                </div>
+                              </div>
+                          <div class="form-group row">
+                            <label for="inputCard" class="col-sm-4 col-form-label">Tax Amount</label>
+                            <div class="col-sm-8">
+                              
+							  <input type="text" class="form-control" id="inputCard" placeholder="Tax Amount">
+                            </div>
+                          </div>
+						  
+						  <div class="form-group row">
+                            <label for="inputCard" class="col-sm-4 col-form-label">Tax Amount Type</label>
+                            <div class="col-sm-8">
+                              <input type="text" class="form-control currency-input" id="inputCard" >
+							  
+                            </div>
+                          </div>
+						  
+						  
+                          <div class="form-group row">
+                            <label for="inputDate" class="col-sm-4 col-form-label">Customer Order Number</label>
+                            <div class="col-sm-8">
+                              <input type="text" class="form-control" id="customerOrderNumer" placeholder="Customer Order Number">
+                            </div>
+                          </div>						  
+                        </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="panel panel-default">
+                          <div class="panel-heading">
+                            <h4 class="panel-title">
+                              <a data-toggle="collapse" data-parent="#accordion" href="#collapse5" class="collapsed">
+                                Level III
+                              </a>
+                            </h4>
+                          </div>
+                          <div id="collapse5" class="panel-collapse collapse">
+                            <div class="panel-body">
+                              <div>
+                                <div class="panel-body">
+                          <div class="form-group row">
+                                <label class="col-sm-4 col-form-label">
+                                  Options Fields
+                                </label>
+                                <div class="col-sm-8">
+                                  <div class="radio">
+                                    <label for="radiooption1">
+                                      <input class="custom-radio" type="radio" name="optionsGroup" id="radioOption1" value="radioOption1" checked>
+                                      Healthcare
+                                    </label>
+                                  </div>
+                                  <div class="radio">
+                                    <label for="radioOption2">
+                                      <input class="custom-radio" type="radio" name="optionsGroup" id="radioOption2" value="radioOption2">
+                                      Level1
+                                    </label>
+                                  </div>
+								  <div class="radio">
+                                    <label for="radioOption3">
+                                      <input class="custom-radio" type="radio" name="optionsGroup" id="radioOption2" value="radioOption2">
+                                      Level2
+                                    </label>
+                                  </div>
+								  <div class="radio">
+                                    <label for="radioOption4">
+                                      <input class="custom-radio" type="radio" name="optionsGroup" id="radioOption2" value="radioOption2">
+                                      None
+                                    </label>
+                                  </div>
+                                </div>
+                              </div>
+                          <div class="form-group row">
+                            <label for="inputCard" class="col-sm-4 col-form-label">Ship From Zip</label>
+                            <div class="col-sm-8">
+                              
+							  <input type="text" class="form-control" id="inputCard" placeholder="Ship From Zip">
+                            </div>
+                          </div>
+						  
+						  <div class="form-group row">
+                            <label for="inputCard" class="col-sm-4 col-form-label">Ship To Zip</label>
+                            <div class="col-sm-8">
+                              
+							  <input type="text" class="form-control" id="inputCard" placeholder="Ship To Zip">
+                            </div>
+                          </div>
+						  
+						  
+						  <div class="form-group row">
+                            <label for="inputCard" class="col-sm-4 col-form-label">Order Id</label>
+                            <div class="col-sm-8">
+                              <input type="text" class="form-control" id="inputCard" placeholder="Order Id">
+							  
+                            </div>
+                          </div>
+						  
+						  
+                          <div class="form-group row">
+                            <label for="inputDate" class="col-sm-4 col-form-label">Customer Code</label>
+                            <div class="col-sm-8">
+                              <input type="text" class="form-control" id="customerCode" placeholder="Customer Code">
+                            </div>
+                          </div>
+                         
+						   <div class="form-group row">
+                            <label for="inputCard" class="col-sm-4 col-form-label">Product Code</label>
+                            <div class="col-sm-8">
+                              <input type="text" class="form-control" id="inputCard" placeholder="Product Code">
+							  
+                            </div>
+                          </div>
+							 
+							 
+							
+						   <div class="form-group row">
+                            <label for="inputCard" class="col-sm-4 col-form-label">Product Commodity Code</label>
+                            <div class="col-sm-8">
+                              <input type="text" class="form-control" id="inputCard" placeholder="Product Commodity Code">
+							  
+                            </div>
+                          </div> 
+						  
+						  
+						   <div class="form-group row">
+                            <label for="inputCard" class="col-sm-4 col-form-label">Product Name</label>
+                            <div class="col-sm-8">
+                              <input type="text" class="form-control" id="inputCard" placeholder="Product Name">
+							  
+                            </div>
+                          </div>
+						  
+						  
+						  
+						  
+						  
+						  
+						   <div class="form-group row">
+                            <label for="inputCard" class="col-sm-4 col-form-label">Quantity</label>
+                            <div class="col-sm-8">
+                              <input type="text" class="form-control" id="inputCard" placeholder="Quantity">
+							  
+                            </div>
+                          </div>
+						  
+						  
+							 
+							
+						   <div class="form-group row">
+                            <label for="inputCard" class="col-sm-4 col-form-label">Measurement Unit</label>
+                            <div class="col-sm-8">
+                              <input type="text" class="form-control" id="inputCard" placeholder="Measurement Unit">
+							  
+                            </div>
+                          </div> 
+						  
+						  
+						  
+						  
+						  
+						   <div class="form-group row">
+                            <label for="inputCard" class="col-sm-4 col-form-label">Shipping Charges</label>
+                            <div class="col-sm-8">
+                              <input type="text" class="form-control" id="inputCard" placeholder="Shipping Charges">
+							  
+                            </div>
+                          </div>
+						  
+						  
+						  
+						  
+						   <div class="form-group row">
+                            <label for="inputCard" class="col-sm-4 col-form-label">Duty Charges</label>
+                            <div class="col-sm-8">
+                              <input type="text" class="form-control" id="inputCard" placeholder="Duty Charges">
+							  
+                            </div>
+                          </div>
+						  
+						  
+						  
+						   <div class="form-group row">
+                            <label for="inputCard" class="col-sm-4 col-form-label">Price</label>
+                            <div class="col-sm-8">
+                              <input type="text" class="form-control" id="inputCard" placeholder="price">
+							  
+                            </div>
+                          </div>
+							  
+							   
+                          
+						  
+						  
+						  
+						  <div class="form-group row">
+                            <div class="col-sm-8">
+                            </div>
+                          </div>
+						  
+						  
+                        </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="tab-action-sm">
+                        <button type="submit" class="btn btn-secondary">Clear Form</button>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                      </div>
+                      <div class="tab-action-xs">
+                        <button type="submit" class="btn btn-secondary">Clear Form</button>
+                        <button type="submit" class="btn btn-primary" tabindex="6" >Submit</button>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+
+              </form>
+
+            </div>
+            <!-- /Tab content with a panel and an accordion -->
+            <div class="tab-pane" id="Capture">
+			
+					 <div class="container-fluid">
+                  <div class="row" id="authID">
+
+                    <div class="col-xs-12 col-md-6 left">
+                      <div class="panel panel-default">
+                        <div class="panel-heading">
+                          <h3 class="panel-title">Capture Data</h3>
+                        </div>
+                        <div class="panel-body">
+                          <div class="form-group row">
+                            <label for="inputAmount" class="col-sm-4 col-form-label">Auth Code</label>
+                            <div class="col-sm-8">
+                              <input type="text" class="form-control" id="inputAuthcode1" placeholder="Auth Code">
+							  <span id="errorShow1" ></span>
+							  
+                            </div>
+                          </div>
+						 
+
+                        </div>
+                      </div>
+
+                      <div class="tab-action-md">                        
+                        <button type="submit" class="btn btn-primary" onclick="secondPage();">Submit</button>
+                      </div>
+                      <div class="tab-action-sm">
+                        <button type="submit" class="btn btn-secondary">Clear Form</button>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                      </div>
+                      <div class="tab-action-xs">
+                        <button type="submit" class="btn btn-secondary">Clear Form</button>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                      </div>
+                    </div>
+
+                  </div>
+				  
+				   <div class="row" id="secondAuthID" style="display:none;">
+
+                    <div class="col-xs-12 col-md-6 left">
+                      <div class="panel panel-default">
+                        <div class="panel-heading">
+                          <h3 class="panel-title">Capture Result</h3>
+                        </div>
+                        <div class="panel-body">
+                          <div class="form-group row">
+                            <label for="inputAmount" class="col-sm-4 col-form-label">Auth Code</label>
+                            <div class="col-sm-8">
+                              <input type="text" class="form-control" id="inputAuthcode2">
+                            </div>
+                          </div>
+						  <div class="form-group row">
+                            <label for="inputAmount" class="col-sm-4 col-form-label">Card NBR</label>
+                            <div class="col-sm-8">
+                              <input type="text" class="form-control" id="inputcardnumber" placeholder="">
+                            </div>
+                          </div>
+						  
+						   <div class="form-group row">
+                            <label for="inputAmount" class="col-sm-4 col-form-label">Orig Amount</label>
+                            <div class="col-sm-8">
+                              <input type="text" class="form-control" id="inputAmount2" value="$ 120.00">
+                            </div>
+                          </div>
+						  
+						  
+						  
+						   <div class="form-group row">
+                            <label for="inputAmount" class="col-sm-4 col-form-label">Add Tax</label>
+                            <div class="col-sm-8">
+                              <input type="text" class="form-control" id="inputAmount2" placeholder="0.0">
+                            </div>
+                          </div>
+						  
+						  
+						   <div class="form-group row">
+                            <label for="inputAmount" class="col-sm-4 col-form-label">Add Tip</label>
+                            <div class="col-sm-8">
+                              <input type="text" class="form-control" id="inputAmount2" placeholder="0.0">
+                            </div>
+                          </div>
+						  
+						  <div class="form-group row">
+                            <label for="inputAmount" class="col-sm-4 col-form-label">Adjust Amount</label>
+                            <div class="col-sm-8">
+                              <input type="text" class="form-control" id="inputAmount2" placeholder="0.0">
+                            </div>
+                          </div>
+						  
+						   <div class="form-group row">
+                            <label for="inputAmount" class="col-sm-4 col-form-label">Tax Exempt Y/N</label>
+                            <div class="col-sm-8">
+                              <input type="text" class="form-control" id="inputAmount2" placeholder="Y">
+                            </div>
+                          </div>
+						  
+						  
+						     <div class="form-group row">
+                            <label for="inputAmount" class="col-sm-4 col-form-label">Customer NBR</label>
+                            <div class="col-sm-8">
+                              <input type="text" class="form-control" id="inputAmount2" placeholder="">
+                            </div>
+                          </div>
+						    <div class="form-group row">
+                            <label for="inputAmount" class="col-sm-4 col-form-label">Recurring? Y/N</label>
+                            <div class="col-sm-8">
+                              <input type="text" class="form-control" id="inputAmount2" placeholder="N">
+                            </div>
+                          </div>
+						  <div class="form-group row">
+                            <label for="inputAmount" class="col-sm-4 col-form-label">Cust Name</label>
+                            <div class="col-sm-8">
+                              <input type="text" class="form-control" id="inputAmount2" value="James Bond">
+                            </div>
+                          </div>
+						  
+						    <div class="form-group row">
+                            <label for="inputAmount" class="col-sm-4 col-form-label">Billing Address</label>
+                            <div class="col-sm-8">
+                              <input type="text" class="form-control" id="inputAmount2" value="7100 Athens Place">
+                            </div>
+                          </div>
+						  
+						  
+                        </div>
+                      </div>
+
+                      <div class="tab-action-md">                        
+                        <button type="submit" class="btn btn-primary" id="mpopupBox1" >Submit</button>
+                      </div>
+                      <div class="tab-action-sm">
+                        <button type="submit" class="btn btn-secondary">Clear Form</button>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                      </div>
+                      <div class="tab-action-xs">
+                        <button type="submit" class="btn btn-secondary">Clear Form</button>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                      </div>
+                    </div>
+
+                  </div>
+				  
+				  
+				  <div id="mpopupLink1" style="display:none;" class="modal">
+
+                   <div class="modal-content" style="width:74%; bottom:10%;" >
+                      <div class="panel panel-default" >
+                        <div class="panel-heading" onclick="closediv('mpopupLink1')">
+						 <span class="close">&times;</span>
+						
+                          <h3 class="panel-title" style="background:#33bbbd;color:#ffffff;">Capture Result</h3>
+                        
+						
+						</div>
+						<div class="panel-body col-sm-12" id="myModalCapture">
+						
+						<div class="col-sm-6 border">
+							<table>
+							<tr class="form-group row">
+							<td class="col-sm-6 form-label strng">Auth Code
+							</td>
+							<td class="col-sm-6 col-form-label" id="inputAuthcode1Lbl">
+							</td>
+							</tr>
+							<tr class="form-group row">
+							<td class="col-sm-6 form-label strng">AVS result
+							</td>
+							<td class="col-sm-6 col-form-label">ZIP Match
+							</td>
+							</tr>
+							<tr class="form-group row">
+							<td class="col-sm-6 form-label strng">CVV Result
+							</td>
+							<td class="col-sm-6 col-form-label">123
+							</td>
+							</tr>
+							<tr class="form-group row">
+							<td class="col-sm-6 form-label strng">Response Code
+							</td>
+							<td class="col-sm-6 col-form-label">000
+							</td>
+							</tr>
+							<tr class="form-group row">
+							<td class="col-sm-6 form-label strng">Total Amount
+							</td>
+							<td class="col-sm-6 col-form-label">$ 120.00
+							</td>
+							</tr>
+							
+							</table>
+						
+						</div>
+						
+						
+						<div class="col-sm-6">	
+
+							<table>
+							<tr class="form-group row">
+							<td class="col-sm-6 form-label strng">Card NBR
+							</td>
+							<td class="col-sm-6 col-form-label">4012000098765439
+							</td>
+							</tr>							
+							<tr class="form-group row">
+							<td class="col-sm-6 form-label strng">Card Exp
+							</td>
+							<td class="col-sm-6 col-form-label" id="inputAuthcode1Lbl">1220
+							</td>
+							</tr>
+							<tr class="form-group row">
+							<td class="col-sm-6 form-label strng">Billing Address
+							</td>
+							<td class="col-sm-6 col-form-label">7100 Athens Place
+							</td>
+							</tr>
+							<tr class="form-group row">
+							<td class="col-sm-6 form-label strng">Transaction Id
+							</td>
+							<td class="col-sm-6 col-form-label">1987498172498274
+							</td>
+							</tr>
+							<tr class="form-group row">
+							<td class="col-sm-6 form-label strng">Recurring
+							</td>
+							<td class="col-sm-6 col-form-label">No
+							</td>
+							</tr>
+							<tr class="form-group row">
+							<td class="col-sm-6 form-label strng">Date/Time
+							</td>
+							<td class="col-sm-6 col-form-label">06/17
+							</td>
+							</tr>
+							
+							</table>
+						
+						
+						</div>
+						
+                        </div>
+                      </div>
+                        
+
+                      <div class="tab-action-md">                        
+                        <button type="submit" class="btn btn-primary" onclick="printFunction('myModalCapture')">Save/Print</button>
+                      </div>
+                      <div class="tab-action-sm">
+                        <button type="submit" class="btn btn-secondary">Clear Form</button>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                      </div>
+                      <div class="tab-action-xs">
+                        <button type="submit" class="btn btn-secondary">Clear Form</button>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                      </div>
+                    </div>
+
+                  </div>
+				
+				  
+                </div>
+			
+			
+			
+			</div>
+            <!-- Tab content with a panel -->
+            <div class="tab-pane" id="Refund">
+
+             
+
+                <div class="container-fluid">
+                  <div class="row" id="refundID">
+
+                    <div class="col-xs-12 col-md-6 left">
+                      <div class="panel panel-default">
+                        <div class="panel-heading">
+                          <h3 class="panel-title">Refund Data</h3>
+                        </div>
+                        <div class="panel-body">
+                          <div class="form-group row">
+                            <label for="inputAmount" class="col-sm-4 col-form-label">Auth Code <br> OR <br>Transaction Id</label>
+                            <div class="col-sm-8">
+                              <input type="text" class="form-control" id="inputauthcode1" placeholder="">
+							  <span id="errorShow"></span>
+                            </div>
+                          </div>
+						  
+
+                        </div>
+                      </div>
+
+                      <div class="tab-action-md">                        
+                        <button type="submit" class="btn btn-primary" onclick="secondRefundPage();">Submit</button>
+                      </div>
+                      <div class="tab-action-sm">
+                        <button type="submit" class="btn btn-secondary">Clear Form</button>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                      </div>
+                      <div class="tab-action-xs">
+                        <button type="submit" class="btn btn-secondary">Clear Form</button>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                      </div>
+                    </div>
+
+                  </div>
+				  
+				   <div class="row" id="secondrefundID" style="display:none;">
+
+                    <div class="col-xs-12 col-md-6 left">
+                      <div class="panel panel-default">
+                        <div class="panel-heading">
+                          <h3 class="panel-title">Refund Result</h3>
+                        </div>
+                        <div class="panel-body">
+							 <div class="form-group row">
+                            <label for="inputAmount" class="col-sm-4 col-form-label">Result</label>
+                            <div class="col-sm-8">
+                              <input type="text" class="form-control" id="inputAmount2" value="Refund Requested">
+                            </div>
+                          </div>
+						  						
+                          <div class="form-group row">
+                            <label for="inputAmount" class="col-sm-4 col-form-label">Auth Code</label>
+                            <div class="col-sm-8">
+                              <input type="text" class="form-control" id="inputauthcode2" placeholder="">
+                            </div>
+                          </div>
+						  <div class="form-group row">
+                            <label for="inputAmount" class="col-sm-4 col-form-label">AVS Result</label>
+                            <div class="col-sm-8">
+                              <input type="text" class="form-control" id="inputAmount2" placeholder="" >
+                            </div>
+                          </div>
+						  
+						   <div class="form-group row">
+                            <label for="inputAmount" class="col-sm-4 col-form-label">CVV Result</label>
+                            <div class="col-sm-8">
+                              <input type="text" class="form-control" id="inputAmount2" placeholder="123">
+                            </div>
+                          </div>
+						  
+						  
+						  
+						   <div class="form-group row">
+                            <label for="inputAmount" class="col-sm-4 col-form-label">Response Code</label>
+                            <div class="col-sm-8">
+                              <input type="text" class="form-control" id="inputAmount2" placeholder="000">
+                            </div>
+                          </div>
+						  
+						  
+						   <div class="form-group row">
+                            <label for="inputAmount" class="col-sm-4 col-form-label">Response Message</label>
+                            <div class="col-sm-8">
+                              <input type="text" class="form-control" id="inputAmount2" placeholder="">
+                            </div>
+                          </div>
+						  
+						  <div class="form-group row">
+                            <label for="inputAmount" class="col-sm-4 col-form-label">Total Amount</label>
+                            <div class="col-sm-8">
+                              <input type="text" class="form-control" id="inputAmount2" value="$ 240.00">
+                            </div>
+                          </div>
+						  
+						   <div class="form-group row">
+                            <label for="inputAmount" class="col-sm-4 col-form-label">Card NBR</label>
+                            <div class="col-sm-8">
+                              <input type="text" class="form-control" id="cardRefund" placeholder="" value="4012-XXXX-XXXX-5439">
+                            </div>
+                          </div>
+						  
+						  
+						  
+						    <div class="form-group row">
+                            <label for="inputAmount" class="col-sm-4 col-form-label">Card Exp</label>
+                            <div class="col-sm-8">
+                              <input type="text" class="form-control" id="inputAmount2" placeholder="1220">
+                            </div>
+                          </div>
+						  <div class="form-group row">
+                            <label for="inputAmount" class="col-sm-4 col-form-label">Transaction Id</label>
+                            <div class="col-sm-8">
+                              <input type="text" class="form-control" id="inputAmount2" placeholder="" value="987600000001234">
+                            </div>
+                          </div>
+						  
+						    <div class="form-group row">
+                            <label for="inputAmount" class="col-sm-4 col-form-label">Recurring</label>
+                            <div class="col-sm-8">
+                              <input type="text" class="form-control" id="inputAmount2" placeholder="">
+                            </div>
+                          </div>
+						  <div class="form-group row">
+                            <label for="inputAmount" class="col-sm-4 col-form-label">Date/Time</label>
+                            <div class="col-sm-8">
+                              <input type="text" class="form-control" id="inputAmount2" placeholder="06/17">
+                            </div>
+                          </div>
+						  
+						  
+                        </div>
+                      </div>
+
+                      <div class="tab-action-md">                        
+                        <button type="submit" class="btn btn-primary" id="mpopupLink">Submit</button>
+						 <button type="submit" class="btn btn-secondary">Print</button>
+						  <button type="submit" class="btn btn-secondary">Reciept</button>
+						  
+                      </div>
+                      <div class="tab-action-sm">
+                        <button type="submit" class="btn btn-secondary">Clear Form</button>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                      </div>
+                      <div class="tab-action-xs">
+                        <button type="submit" class="btn btn-secondary">Clear Form</button>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                      </div>
+                    </div>
+
+                  </div>
+				  
+				  
+				  <div id="mpopupBox" class="modal" style="display:none;">
+
+                    <div class="modal-content" style="width:74%; bottom:10%;">
+                      <div class="panel panel-default" >
+                        <div class="panel-heading" onclick="closediv('mpopupBox')">
+						 <span class="close">&times;</span>
+                          <h3 class="panel-title" style="background:#33bbbd;color:#ffffff;">Refund Receipt</h3>
+                        </div>
+                        <div class="panel-body" id="myModalRefund">
+						
+							<div class="col-sm-6 border">
+							<table>
+							
+							
+							
+							
+							<tr class="form-group row">
+							<td class="col-sm-6 form-label strng"><label for="inputAmount" >Refund Customer</label>
+							</td>
+							<td class="col-sm-6 col-form-label">Credit
+							</td>
+							</tr>
+							
+							<tr class="form-group row">
+							<td class="col-sm-6 form-label strng"><label for="inputAmount" >Merchant Name</label>
+							</td>
+							<td class="col-sm-6 col-form-label">Danial Petter
+							</td>
+							</tr>
+							
+							<tr class="form-group row">
+							<td class="col-sm-6 form-label strng"><label for="inputAmount" >Merchant Address</label>
+							</td>
+							<td class="col-sm-6 col-form-label">NewYork
+							</td>
+							</tr>
+							
+							
+							<tr class="form-group row">
+							<td class="col-sm-6 form-label strng"><label for="inputAmount" >Merchant City</label>
+							</td>
+							<td class="col-sm-6 col-form-label">Washington
+							</td>
+							</tr>
+							
+							
+							<tr class="form-group row">
+							<td class="col-sm-6 form-label strng"><label for="inputAmount" >Merchant Postal Code</label>
+							</td>
+							<td class="col-sm-8 col-form-label">94103
+							</td>
+							</tr>
+							
+							
+							<tr class="form-group row">
+							<td class="col-sm-6 form-label strng"><label for="inputAmount" >Merchant Country</label>
+							</td>
+							<td class="col-sm-8 col-form-label">United State
+							</td>
+							</tr>
+							
+							
+							<tr class="form-group row">
+							<td class="col-sm-6 form-label strng"><label for="inputAmount" >Phone Number</label>
+							</td>
+							<td class="col-sm-8 col-form-label">(+1)-541-754-3010
+							</td>
+							</tr>
+							
+							<tr class="form-group row">
+							<td class="col-sm-6 form-label strng"><label for="inputAmount" >Date</label>
+							</td>
+							<td class="col-sm-8 col-form-label">06/17
+							</td>
+							</tr>
+							
+							<tr class="form-group row">
+							<td class="col-sm-6 form-label strng"><label for="inputAmount" >Time</label>
+							</td>
+							<td class="col-sm-8 col-form-label">20:12
+							</td>
+							</tr>
+							
+							</table>
+							
+							</div>
+							
+							<div class="col-sm-6">
+							
+							<table>
+							
+							<tr class="form-group row">
+							<td class="col-sm-6 form-label strng"><label for="inputAmount" >SubTotal</label>
+							</td>
+							<td class="col-sm-8 col-form-label">$ 240.00
+							</td>
+							</tr>
+							
+							
+							
+							<tr class="form-group row">
+							<td class="col-sm-6 form-label strng"><label for="inputAmount" >Tax</label>
+							</td>
+							<td class="col-sm-8 col-form-label">0.0
+							</td>
+							</tr>
+							
+							
+							<tr class="form-group row">
+							<td class="col-sm-6 form-label strng"><label for="inputAmount" >Tip</label>
+							</td>
+							<td class="col-sm-8 col-form-label">0.0
+							</td>
+							</tr>
+							
+							<tr class="form-group row">
+							<td class="col-sm-6 form-label strng"><label for="inputAmount" >Total</label>
+							</td>
+							<td class="col-sm-8 col-form-label">$ 240.00
+							</td>
+							</tr>
+							<tr class="form-group row">
+							<td class="col-sm-6 form-label strng"><label for="inputAmount" >Payment Type</label>
+							</td>
+							<td class="col-sm-8 col-form-label">Visa
+							</td>
+							</tr>
+							
+							
+							<tr class="form-group row">
+							<td class="col-sm-6 form-label strng"><label for="inputAmount" >Card Number</label>
+							</td>
+							<td class="col-sm-8 col-form-label">4012XXXXXXXX5439
+							</td>
+							</tr>
+							
+							
+							<tr class="form-group row">
+							<td class="col-sm-6 form-label strng"><label for="inputAmount" >Auth Code</label>
+							</td>
+							<td class="col-sm-8 col-form-label">724874
+							</td>
+							</tr>
+							<tr class="form-group row">
+							<td class="col-sm-6 form-label strng"><label for="inputAmount" >Transaction Id</label>
+							</td>
+							<td class="col-sm-8 col-form-label">1987498172498274
+							</td>
+							</tr>
+							
+							<tr class="form-group row">
+							<td class="col-sm-6 form-label strng"><label for="inputAmount" >Description Purchase</label>
+							</td>
+							<td class="col-sm-8 col-form-label">Refund
+							</td>
+							</tr>
+							
+							</table>
+						
+							</div>
+                        </div>
+                      </div>
+
+                      <div class="tab-action-md">                        
+                        <button type="submit" class="btn btn-primary" onclick="printFunction('myModalRefund')">Save/Print</button>
+                      </div>
+                     
+                    </div>
+
+                  </div>
+				 
+                </div>
+
+              
+
+            </div>
+            <!-- /Tab content with a panel -->
+
+            <!-- Tab content with 2 cards -->
+            <div class="tab-pane" id="capture">
+              <div class="container-fluid">
+                <div class="row">
+
+                  <div class="col-xs-12 col-md-6 left">
+                    <div class="card">
+                      <div>
+                        Layout: Tab content with 2 cards
+                      </div>
+                      <h3>1st card</h3>
+                      <div>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer eget mollis orci, non commodo sem. Vivamus facilisis nunc nec finibus egestas. Suspendisse eu orci sagittis, dapibus ante sit amet, vestibulum lorem. Integer viverra sollicitudin dictum. Integer consequat ligula at ipsum euismod mattis. Maecenas venenatis risus nec velit malesuada, id imperdiet mi malesuada. Aenean velit lectus, aliquam et lorem vitae, posuere elementum tellus. Ut maximus efficitur libero, in vestibulum enim tristique a. In ut mi non neque mattis efficitur vitae quis ligula. Integer ut urna metus. Nullam a turpis in velit bibendum euismod ut in leo. Aliquam tincidunt aliquet commodo. Donec id ante fermentum velit vulputate eleifend ac id lorem. Nulla finibus fringilla lectus, in laoreet risus commodo ut.
+                      </div>
+                      <div>
+                        Morbi blandit tincidunt euismod. Curabitur tempus imperdiet elit vel suscipit. Aenean massa magna, interdum non urna in, auctor sagittis dui. Etiam varius nunc id purus ultricies, quis mollis tellus posuere. Donec vel nisl ut diam facilisis pulvinar. Quisque finibus hendrerit augue sit amet cursus. Nullam luctus tempus nisi vitae finibus. Duis sollicitudin ex nec ipsum mollis, eu ultrices quam viverra. Donec nec tortor ut felis ultricies convallis consequat sit amet velit. Fusce tincidunt feugiat ipsum et eleifend. Morbi sapien lorem, varius vel enim nec, viverra vestibulum lacus. Aliquam diam purus, maximus eu rutrum vel, fermentum eget tortor. Curabitur consectetur efficitur lobortis. Aenean ornare laoreet leo id tristique. Integer pharetra quis tellus non auctor.
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-xs-12 col-md-6 right">
+                    <div class="card">
+                      <div>
+                        Layout: Tab content with 2 cards
+                      </div>
+                      <h3>2nd card</h3>
+                      <div>
+                        Morbi blandit tincidunt euismod. Curabitur tempus imperdiet elit vel suscipit. Aenean massa magna, interdum non urna in, auctor sagittis dui. Etiam varius nunc id purus ultricies, quis mollis tellus posuere. Donec vel nisl ut diam facilisis pulvinar. Quisque finibus hendrerit augue sit amet cursus. Nullam luctus tempus nisi vitae finibus. Duis sollicitudin ex nec ipsum mollis, eu ultrices quam viverra. Donec nec tortor ut felis ultricies convallis consequat sit amet velit. Fusce tincidunt feugiat ipsum et eleifend. Morbi sapien lorem, varius vel enim nec, viverra vestibulum lacus. Aliquam diam purus, maximus eu rutrum vel, fermentum eget tortor. Curabitur consectetur efficitur lobortis. Aenean ornare laoreet leo id tristique. Integer pharetra quis tellus non auctor.
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+            <!-- /Tab content with 2 cards -->
+
+            <!-- Tab contnt with 1 card -->
+            <div class="tab-pane" id="refund">
+              <div class="container-fluid">
+                <div class="row">
+
+                  <div class="col-xs-12 col-md-12 single">
+                    <div class="card">
+                      <div>
+                        Layout: Tab content with 1 card
+                      </div>
+                      <h3>H3 Heading</h3>
+                      <div>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer eget mollis orci, non commodo sem. Vivamus facilisis nunc nec finibus egestas. Suspendisse eu orci sagittis, dapibus ante sit amet, vestibulum lorem. Integer viverra sollicitudin dictum. Integer consequat ligula at ipsum euismod mattis. Maecenas venenatis risus nec velit malesuada, id imperdiet mi malesuada. Aenean velit lectus, aliquam et lorem vitae, posuere elementum tellus. Ut maximus efficitur libero, in vestibulum enim tristique a. In ut mi non neque mattis efficitur vitae quis ligula. Integer ut urna metus. Nullam a turpis in velit bibendum euismod ut in leo. Aliquam tincidunt aliquet commodo. Donec id ante fermentum velit vulputate eleifend ac id lorem. Nulla finibus fringilla lectus, in laoreet risus commodo ut.
+                      </div>
+                      <div>
+                        Morbi blandit tincidunt euismod. Curabitur tempus imperdiet elit vel suscipit. Aenean massa magna, interdum non urna in, auctor sagittis dui. Etiam varius nunc id purus ultricies, quis mollis tellus posuere. Donec vel nisl ut diam facilisis pulvinar. Quisque finibus hendrerit augue sit amet cursus. Nullam luctus tempus nisi vitae finibus. Duis sollicitudin ex nec ipsum mollis, eu ultrices quam viverra. Donec nec tortor ut felis ultricies convallis consequat sit amet velit. Fusce tincidunt feugiat ipsum et eleifend. Morbi sapien lorem, varius vel enim nec, viverra vestibulum lacus. Aliquam diam purus, maximus eu rutrum vel, fermentum eget tortor. Curabitur consectetur efficitur lobortis. Aenean ornare laoreet leo id tristique. Integer pharetra quis tellus non auctor.
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+            <!-- /Tab contnt with 1 card -->
+
+            <div class="tab-pane" id="ach">
+              <div class="container-fluid">
+                <div class="row">
+
+                  <h3>Some content for ACH</h3>
+
+                </div>
+              </div>
+            </div>
+
+            <div class="tab-pane" id="avs">
+              <div class="container-fluid">
+                <div class="row">
+
+                  <h3>Some content for AVS</h3>
+
+                </div>
+              </div>
+            </div>
+
+            <div class="tab-pane" id="cvv">
+              <div class="container-fluid">
+                <div class="row">
+
+                  <h3>Some content for CVV</h3>
+
+                </div>
+              </div>
+            </div>
+
+            <div class="tab-pane" id="force">
+              <div class="container-fluid">
+                <div class="row">
+
+                  <h3>Some content for force</h3>
+
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <!-- /Tabs -->
+
+      </div>
+    </div>
+    <!-- /Page content-->
+
+  </div>
+</div>
+<!-- /Side menu and main content -->
+<!-- The Modal -->
+<div id="myModalFail" class="modal">
+  <!-- Modal content -->
+  <div class="modal-content">
+  <div id="myModalFailPrintable">
+    <div class="col-sm-12" style="background:#33bbbd;color:#ffffff;">
+		<div class="col-sm-8">
+		<h2 >Transaction Declined</h2>
+		</div>
+		<div class="col-sm-4" onclick="closediv('myModalFail')">
+			<span class="close">&times;</span>
+		</div>	
+	</div>
+	<table class="table">
+		<tr>
+			<td>Result
+			</td>
+			<td>Declined
+			</td>
+		</tr>
+		<tr>
+			<td>Code
+			</td>
+			<td>CS999
+			</td>
+		</tr>
+		<tr>
+			<td>Message
+			</td>
+			<td>Error code transaction processing
+			</td>
+		</tr>
+	</table>
+	</div>
+  <input type="submit" onclick="printFunction('myModalFailPrintable')" value="Print/Save" class="btn btn-primary">
+  </div>
+</div>
+<div id="myModalSuccess" class="modal">
+                  <div class="modal-content">
+                  <div id="myModalSuccessPrintable">
+                                <div class="col-sm-12" style="background:#33bbbd;color:#ffffff;">
+                                                <div class="col-sm-8">
+                                                <h2 >Transaction Success</h2>
+                                                </div>
+                                                <div class="col-sm-4" onclick="closediv('myModalSuccess')">
+                                                <span class="close">&times;</span>
+                                                </div>   
+                                </div>
+                                <table class="table">
+                                                <tr>
+                                                                <td>Result
+                                                                </td>
+                                                                <td>Success
+                                                                </td>
+                                                </tr>
+                                                <tr>
+                                                                <td>Auth Code
+                                                                </td>
+                                                                <td>724874
+                                                                </td>
+                                                </tr>
+                                                <tr>
+                                                                <td>Card Number
+                                                                </td>
+                                                                <td>4012-XXXX-XXXX-5439
+                                                                </td>
+                                                </tr>
+                                                <tr>
+                                                                <td>Txn Id
+                                                                </td>
+                                                                <td>10000001254394560
+                                                                </td>
+                                                </tr>
+                                                <tr>
+                                                                <td>Payment Type
+                                                                </td>
+                                                                <td>Visa
+                                                                </td>
+                                                </tr>
+                                                <tr>
+                                                                <td>Amount
+                                                                </td>
+                                                                <td><div id="sucMdlAmtId"> $11.25</div>
+                                                                </td>
+                                                </tr>
+                                                <tr>
+                                                                <td>Date Time
+                                                                </td>
+                                                                <td><p id="date1"></p>
+                                                                </td>
+                                                </tr>
+                                                <tr>
+                                                                <td>Message
+                                                                </td>
+                                                                <td>Success code 000 (Transaction Success).
+                                                                </td>
+                                                </tr>
+                                </table>
+                                <input type="submit" onclick="printFunction('myModalSuccessPrintable')" value="Print/Save" class="btn btn-primary">
+                  </div>
+                   
+  </div>
+
+ 
+</div>
+
+<!-- Footer -->
+<div class="container-fluid solid-bg">
+  <div class="row">
+    <div id="footer">
+      <p>Copyrights &copy; 2017 RSSoftware. All rights reserved.</p>
+    </div>
+  </div>
+</div>
+<!-- /Footer -->
+<script>
+
+
+
+
+// Get the modal
+var modalFail = document.getElementById('myModalFail');
+var modalSuccess = document.getElementById('myModalSuccess');
+
+// Get the button that opens the modal
+var btn = document.getElementById("myBtn");
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks the button, open the modal 
+btn.onclick = function() {
+	var validateFlag = true;
+	if(document.getElementById("inputCard").value==''){
+		validateFlag=false;
+		document.getElementById("inputCard").style.borderColor='red';
+	}
+	if(document.getElementById("cardExp").value==''){
+		validateFlag=false;
+		document.getElementById("cardExp").style.borderColor='red';
+	}
+	/*if(document.getElementById("inputZip").value==''){
+		validateFlag=false;
+		document.getElementById("inputZip").style.borderColor='red';
+	}*/
+	if(document.getElementById("inputMerchantData2").value==''){
+		validateFlag=false;
+		document.getElementById("inputMerchantData2").style.borderColor='red';
+	}
+	if(document.getElementById("inputCVV").value==''){
+		validateFlag=false;
+		document.getElementById("inputCVV").style.borderColor='red';
+	}
+	if(document.getElementById("inputAmountId").value==''){
+		validateFlag=false;
+		document.getElementById("inputAmountId").style.borderColor='red';
+	}
+	
+	if(validateFlag==true)
+	{
+//		alert(document.getElementById("inputCard").value+" "+document.getElementById("cardExp").value+" "
+//		+document.getElementById("inputCVV").value+" "+document.getElementById("inputZip").value);
+		if(document.getElementById("inputCard").value=='4012000098765439' && document.getElementById("cardExp").value=='1220' 
+		&& document.getElementById("inputCVV").value=='123'  )
+		{
+			document.getElementById("sucMdlAmtId").innerHTML='$'+document.getElementById("inputAmountId").value;
+			var d = new Date();
+            d = d.getFullYear() + "-" + ('0' + (d.getMonth() + 1)).slice(-2) + "-" + ('0' + d.getDate()).slice(-2) + " " + ('0' + d.getHours()).slice(-2) + ":" + ('0' + d.getMinutes()).slice(-2) + ":" + ('0' + d.getSeconds()).slice(-2);
+			document.getElementById("date1").innerHTML = d;
+			modalSuccess.style.display = "block";
+		}else{
+			modalFail.style.display = "block";
+		}
+	}else{
+		$('html,body').scrollTop(200);
+	}
+}
+
+function closediv(elmntId){
+	document.getElementById(elmntId).style.display = "none";
+}
+
+function  isCardEnable(enableFlag){
+	if(enableFlag){
+		document.getElementById("inputCVV").disabled = false;
+		document.getElementById("cardExp").disabled = false;
+		document.getElementById("inputZip").disabled = false;
+		document.getElementById("billingState").disabled = false;
+		document.getElementById("inputCard").disabled = false;
+		document.getElementById("billingAddress").disabled = false;
+	}else{
+		document.getElementById("inputCVV").disabled = true;
+		document.getElementById("cardExp").disabled = true;
+		document.getElementById("inputZip").disabled = true;
+		document.getElementById("billingState").disabled = true;
+		document.getElementById("inputCard").disabled = true;
+		document.getElementById("billingAddress").disabled = true;
+	}
+}
+
+// get the mPopup
+var mpopup = document.getElementById('mpopupBox');
+
+// get the link that opens the mPopup
+var mpLink = document.getElementById("mpopupLink");
+
+// get the close action element
+var close = document.getElementsByClassName("close")[0];
+
+// open the mPopup once the link is clicked
+mpLink.onclick = function() {
+    mpopup.style.display = "block";
+	document.getElementById("inputauthcode1Lbl").innerHTML=document.getElementById("inputauthcode2").value;
+	document.getElementById("inputcardLbl").innerHTML="4012XXXXXXXX5439";
+	document.getElementById("cardExplbl").innerHTML="1220";
+}
+
+
+
+
+
+
+
+
+// get the mPopup
+var mpopup1 = document.getElementById('mpopupBox1');
+
+// get the link that opens the mPopup
+var mpLink1 = document.getElementById("mpopupLink1");
+
+// open the mPopup once the link is clicked
+mpopup1.onclick = function() {
+    mpLink1.style.display = "block";
+	document.getElementById("inputAuthcode1Lbl").innerHTML=document.getElementById("inputAuthcode2").value;
+	document.getElementById("refundcardnumber").innerHTML="4012XXXXXXXX5439";
+	document.getElementById("cardExplbl").innerHTML="1220";
+}
+
+
+
+
+function printFunction(divId) {
+    var prtContent = document.getElementById(divId);
+	var WinPrint = window.open('', '', 'left=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0');
+	WinPrint.document.write(prtContent.innerHTML);
+	WinPrint.document.close();
+	WinPrint.focus();
+	WinPrint.print();
+	WinPrint.close();
+}
+
+
+function secondPage()
+{
+if(document.getElementById("inputAuthcode1").value=='724874' )
+	{
+		document.getElementById("inputAuthcode2").value=document.getElementById("inputAuthcode1").value;
+		document.getElementById("inputcardnumber").value="4012XXXXXXXX5439";
+		document.getElementById("authID").style.display="none";
+		document.getElementById("secondAuthID").style.display="block";
+	}
+	else
+	{
+	   document.getElementById("errorShow1").innerHTML='Please enter valid Auth code';
+		
+	}
+
+}
+
+
+function secondRefundPage()
+{
+if(document.getElementById("inputauthcode1").value=='724874' || document.getElementById("inputauthcode1").value=='987600000001234')
+	{
+		document.getElementById("inputauthcode2").value=document.getElementById("inputauthcode1").value;
+		document.getElementById("refundID").style.display="none";
+		document.getElementById("secondrefundID").style.display="block";
+	}
+	else
+	{
+		document.getElementById("errorShow").innerHTML='Please enter valid Auth code or transaction Id';
+	}
+
+}
+
+
+</script>
+<!-- jQuery -->
+
+<script src="node_modules/jquery/dist/jquery.min.js"></script>
+<!-- Bootstrap JS -->
+<script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+
+</body>
+</html>
+
+
+
+
+

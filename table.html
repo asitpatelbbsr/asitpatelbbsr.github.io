@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>Settled Transaction Report | iFinSwitch</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- FontAwesome CSS -->
+  <link href="node_modules/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+
+  <!-- Custom CSS -->
+  <link href="css/style.css" rel="stylesheet">
+   <!-- Angularjs -->
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+<style>
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 10px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+
+/* Modal Content */
+.modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 15px;
+    border: 1px solid #888;
+    width: 60%;
+	padding-bottom: 0px;
+}
+
+/* The Close Button */
+.close {
+    color: #000000;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+.rtable th
+{
+	padding:9px 5px;
+}
+.rtable td
+{
+	padding:9px 5px;
+}
+</style>
+</head>
+<body class="edgepay" onload="processUser();">
+<!-- Side menu and main content -->
+<div ng-app="myApp" ng-controller="customersCtrl"> 
+<!-- The Modal -->
+<div id="myModalFail" class="modal">
+  <!-- Modal content -->
+  <div class="modal-content">
+    <div class="col-sm-12" style="background:#33bbbd;color:#ffffff;">
+		<div class="col-sm-8">
+		<h3>Transaction Detail</h3>
+		</div>
+		<div class="col-sm-4">
+		<span class="close">&times;</span>
+		</div>	
+	</div>
+		<table class="table">
+		<tr>
+			<td>DATE:TIME
+			</td>
+			<td>12/18 : 1105
+			</td>
+		</tr>
+		<tr>
+			<td>AMOUNT
+			</td>
+			<td>87.82
+			</td>
+		</tr>
+		<tr>
+			<td>CUST NUM
+			</td>
+			<td>2020587936
+			</td>
+		</tr>
+		<tr>
+			<td>CARD NUM
+			</td>
+			<td>4012xxxxxxxx5349
+			</td>
+		</tr>
+		<tr>
+			<td>EXP DATE
+			</td>
+			<td>12/20
+			</td>
+		</tr>
+		<tr>
+			<td>CHK ACCT
+			</td>
+			<td>225
+			</td>
+		</tr>
+		<tr>
+			<td>CHK ROUTE
+			</td>
+			<td>7654
+			</td>
+		</tr>
+		<tr>
+			<td>TRANS TYPE
+			</td>
+			<td>Sales Trans
+			</td>
+		</tr>
+		<tr>
+			<td>TRANS ID
+			</td>
+			<td>4012xxxxxxxx5349
+			</td>
+		</tr>
+		<tr>
+			<td>CUSTOMER NAME
+			</td>
+			<td>Danial Petter
+			</td>
+		</tr>
+		<tr>
+			<td>BILL ADD
+			</td>
+			<td>NewYork
+			</td>
+		</tr>
+		<tr>
+			<td>BILL ZIP
+			</td>
+			<td>770012
+			</td>
+		</tr>
+		<tr>
+			<td>POS ENTRY
+			</td>
+			<td>Swipe
+			</td>
+		</tr>
+		<tr>
+			<td>TERMINAL ID
+			</td>
+			<td>10076005349
+			</td>
+		</tr>
+	</table>
+ </div>
+</div>
+<div class="container-fluid gradient-bg">
+  <div class="row">
+
+    <!-- Side menu -->
+    <div class="nav-side-menu col-xs-12 col-sm-3 col-md-2">
+
+      <!-- Logo -->
+      <div class="logo-container">
+        <div class="logo"></div>
+      </div>
+      <i class="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content"></i>
+      <!-- /Logo -->
+
+      <!-- Navigation -->
+      <div class="menu-list">
+        <ul id="menu-content" class="menu-content collapse out">
+
+          <li>
+            <a href="wip.html">Dashboard</a>
+          </li>
+
+          <li data-toggle="collapse" data-target="#reports" class="collapsed">
+            <a href="#">Reports<span class="arrow"></span></a>
+          </li>
+
+          <li class="has-sub-menu">
+            <ul class="sub-menu collapsed active" id="reports">
+              <li class="active"><a href="Table.html">Settled Transactions</a></li>
+              <li><a href="all.html">Batch Transactions</a></li>
+            </ul>
+          </li>
+
+          <li data-toggle="collapse" data-target="#payments" class="collapsed">
+            <a href="#">Payments<span class="arrow"></span></a>
+          </li>
+
+          <li class="has-sub-menu">
+            <ul class="sub-menu collapse" id="payments">
+              <li><a href="form.html">Virtual Terminal</a></li>
+            </ul>
+          </li>
+
+          <li>
+            <a href="wip.html">Recurring</a>
+          </li>
+
+          <li>
+            <a href="wip.html">Batch Pay</a>
+          </li>
+	
+          <li>
+            <a href="admin.html">Admin</a>
+          </li>
+
+        </ul>
+      </div>
+      <!-- /Navigation -->
+
+    </div>
+    <!-- /Side menu -->
+
+    <!-- Page content -->
+    <div id="page-content-wrapper" class="col-xs-12 col-sm-9 col-md-10">
+      <div class="container-fluid">
+        <!-- User -->
+		<div class="title">
+            <h1 class="page-title">Settled Transaction Report</h1>
+          </div>
+        <div class="row user">
+          <div class="btn-group">
+            <button type="button"
+                    class="btn dropdown-toggle"
+                    data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false">
+              <img id="userImg" src="images/placeholder-user1.jpg" class="image">
+              <p class="name"id="userName">John Merchant<span class="arrow"></span></p>
+              <span class="sr-only">Toggle Dropdown</span>
+            </button>
+            <ul class="dropdown-menu">
+              <li><a href="#">Action</a></li>
+              <li><a href="#">Another action</a></li>
+              <li><a href="#">Something else here</a></li>
+              <li role="separator" class="divider"></li>
+              <li><a href="login.html">Log Out</a></li>
+            </ul>
+          </div>
+        </div>
+        <!-- /User -->
+
+        <!-- Page heading -->
+        <div class="row page-heading">
+
+          <!-- Title -->
+          <div class="title">
+            <h3 class="section-title">Processing Center</h3>
+          </div>
+          <!-- /Title -->
+
+          <!-- Control container -->
+          <div class="control-container">
+
+            <!-- MID section -->
+        <div class="control-first">
+              <p class="mid-label" id="userTitle">Steve's Shoes #1</p>
+              <div class="btn-group mid">
+                <button type="button" class="btn">MID</button>
+                <button type="button"
+                        class="btn dropdown-toggle"
+                        data-toggle="dropdown"
+                        aria-haspopup="true"
+                        aria-expanded="false">
+                  <div class="id-num">1234567890987654<span class="arrow1">&nbsp;&nbsp;</span></div>
+                  <!--<span class="sr-only">Toggle Dropdown</span> -->
+                </button>
+<!--                <ul class="dropdown-menu">
+                  <li>
+                    <a href="#"onclick="setUser(1234567890987655)">1234567890987655</a>
+                  </li>
+                  <li>
+                    <a href="#"onclick="setUser(1234567890987656)">1234567890987656</a>
+                  </li>
+                  <li>
+                    <a href="#"onclick="setUser(1234567890987657)">1234567890987657</a>
+                  </li>
+                </ul> -->
+              </div>
+            </div>
+            <!-- /MID section -->
+
+            <!-- Date range selector section -->
+            <div class="control-second">
+              <div class="btn-group date-range-selector" >
+                <button type="button" class="btn"><i class="fa fa-angle-left" aria-hidden="true"></i></button>
+                <button type="button"
+                        class="btn dropdown-toggle"
+                        data-toggle="dropdown"
+                        aria-haspopup="true"
+                        aria-expanded="false">
+                  <div class="id-num" id="date">{{name}}<span class="arrow"></span></div>
+                  <span class="sr-only">Toggle Dropdown</span>
+                </button>
+                <ul class="dropdown-menu">
+                  <li>
+                    <a href="#" ng-model="name" ng-click="myFunc(1)">06/17/2017 - 07/30/2017</a>
+                  </li>
+                  <li>
+                    <a href="#" ng-model="name" ng-click="myFunc1(2)">02/17/2017 - 05/17/2017</a>
+                  </li>
+                  <li>
+                    <a href="#" ng-model="name" ng-click="myFunc2(3)">01/17/2016 - 01/17/2017</a>
+                  </li>
+                </ul>
+                <button type="button" class="btn"><i class="fa fa-angle-right" aria-hidden="true"></i></button>
+              </div>
+            </div>
+            <!-- /Date range selector section -->
+
+          </div>
+          <!-- Control container -->
+
+        </div>
+        <!-- /Page heading -->
+
+        <!-- Table summary -->
+        <div class="row table-summary-wrapper">
+
+          <div class="table-summary">
+
+            <div class="summary-block date-range" >
+              <div class="summary-label">
+                Date Range
+              </div>
+              <div class="summary-content" id="test">
+                <p>{{name}}</p>
+              </div>
+            </div>
+
+            <div class="summary-block">
+              <div class="summary-label">
+                Net Settlement
+              </div>
+              <div class="summary-content">
+               {{name1}}
+              </div>
+            </div>
+
+            <div class="summary-block">
+              <div class="summary-label">
+                Total Transactions
+              </div>
+              <div class="summary-content">
+                {{name2}}
+              </div>
+            </div>
+
+            <div class="summary-block">
+              <div class="summary-label">
+                Total Credits
+              </div>
+              <div class="summary-content">
+               {{name3}}
+              </div>
+            </div>
+
+            <div class="summary-block">
+              <div class="summary-label">
+                Total Debits
+              </div>
+              <div class="summary-content">
+                {{name4}}
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <!-- /Table summary -->
+
+        <!-- Table -->
+        <div class="row table-wrapper">
+
+          <div class="table-control-top"id="test1">
+            {{customer.length}} results
+          </div>
+
+          <table class="rtable">
+            <thead>
+            <tr>
+              <th class="active">Date : time </th>
+              <th>Amount</th>
+              <th>Cust. no.</td>
+              <th>Card. no.</th>
+              <th>Type</th>
+              <th>Trans. id</th>
+              <th>Customer name</th>
+              <th>Rec.</th>
+            
+			  <th>Status</th>
+			  <th>AuthCode</th>
+			    <th>Currency</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr id="datatable" ng-repeat="x in customer" >
+              <td ><a ng-href="#" onclick="javascript:OpenModal();">{{x.datetest}}</a></td>
+              <td>{{x.datetest1}}</td>
+              <td >{{x.datetest2}}</td>
+              <td>{{x.datetest3}}</td>
+              <td >{{x.datetest4}}</td>
+              <td >{{x.datetest5}}</td>
+              <td >{{x.datetest6}}</td>
+              <td>{{x.datetest7}}</td>
+             
+			  <td >{{x.datetest9}}</td>
+			  <td >{{x.datetest10}}</td>
+			   <td >{{x.datetest8}}</td>
+            </tr>
+            </tbody>
+          </table>
+
+          <div class="table-control-bottom">
+           {{customer.length}} results per page
+          </div>
+           <div class="container">                 
+  <ul class="pagination">
+    <li><a href="#"><<</a></li>
+    <li><a href="#">1</a></li>
+    <li><a href="#">2</a></li>
+    <li><a href="#">3</a></li>
+    <li><a href="#">4</a></li>
+    <li><a href="#">5</a></li>
+    <li><a href="#">>></a></li>
+  </ul>
+</div>
+        </div>
+        <!-- /Table -->
+
+      </div>
+    </div>
+    <!-- /Page content-->
+
+  </div>
+</div>
+<script language="JavaScript">
+function processUser()
+  {
+    if(typeof(Storage) !== "undefined") {
+		document.getElementById("userName").innerHTML=localStorage.getItem("userName");
+		document.getElementById("userTitle").innerHTML=localStorage.getItem("userTitle");
+		document.getElementById("userImg").src=localStorage.getItem("userImg");
+	 }   
+  }   
+function printFunction(divId) {
+    var prtContent = document.getElementById(divId);
+	var WinPrint = window.open('', '', 'left=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0');
+	WinPrint.document.write(prtContent.innerHTML);
+	WinPrint.document.close();
+	WinPrint.focus();
+	WinPrint.print();
+	WinPrint.close();
+}
+</script>
+<!-- /Side menu and main content -->
+
+<!-- Footer -->
+<div class="container-fluid solid-bg">
+  <div class="row">
+    <div id="footer">
+            <p>Copyrights &copy; 2017 RSSoftware. All rights reserved.</p>
+    </div>
+  </div>
+</div>
+<!-- /Footer -->
+
+<!-- jQuery -->
+<script src="node_modules/jquery/dist/jquery.min.js"></script>
+<!-- Bootstrap JS -->
+<script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+<script>
+var app = angular.module('myApp', []);
+app.controller('customersCtrl', function($scope, $http) {
+ $scope.name = "12/17/2016 - 12/18/2016";
+ $scope.name1 = "$38,852.88";
+ $scope.name2 = "$56,043.12";
+ $scope.name3 = "$53,041.56";
+ $scope.name4 = "$3,001.56";
+ $scope.customer = [
+{"datetest":"12/18 : 1105","datetest1":"87.82","datetest2":"2020587936","datetest3":"4012xxxxxxxx5349","datetest4":"D","datetest5":"5400452343","datetest6":"Mills Hale","datetest7":"N","datetest8":"USD","datetest9":"S","datetest10":"5623456765"},
+//{"datetest":"12/18 : 1055","datetest1":"88.26","datetest2":"2020578361","datetest3":"4012xxxxxxxx9207","datetest4":"D","datetest5":"5400175655","datetest6":"Hunt Stuart","datetest7":"N","datetest8":"USD","datetest9":"D","datetest10":"7623456765"},
+//{"datetest":"12/18 : 1052","datetest1":"57.20","datetest2":"2020523284","datetest3":"4012xxxxxxxx2924","datetest4":"D","datetest5":"5400798025","datetest6":"Island It","datetest7":"N","datetest8":"USD","datetest9":"H","datetest10":"1973456765"},
+{"datetest":"12/18 : 0928","datetest1":"13.86","datetest2":"2020662839","datetest3":"4012xxxxxxxx9078","datetest4":"D","datetest5":"5400238049","datetest6":"Simpson Stephens","datetest7":"N","datetest8":"USD","datetest9":"S","datetest10":"543456765"},
+//{"datetest":"12/18 : 0927","datetest1":"5.65","datetest2":"2020730341","datetest3":"4012xxxxxxxx0105","datetest4":"D","datetest5":"5400861975","datetest6":"Graham Atkinson","datetest7":"N","datetest8":"USD","datetest9":"V","datetest10":"323456765"},
+//{"datetest":"12/18 : 0918","datetest1":"82.91","datetest2":"2020426094","datetest3":"4012xxxxxxxx5847","datetest4":"D","datetest5":"5400396304","datetest6":"Thomas Fuller","datetest7":"N","datetest8":"USD","datetest9":"P","datetest10":"823456765"},
+//{"datetest":"12/18 : 0816","datetest1":"46.11","datetest2":"2020826819","datetest3":"4012xxxxxxxx0565","datetest4":"D","datetest5":"5400727494","datetest6":"Thompson Elliott","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"923456765"},
+{"datetest":"12/18 : 0848","datetest1":"84.60","datetest2":"2020446230","datetest3":"4012xxxxxxxx3558","datetest4":"D","datetest5":"5400336866","datetest6":"Moore Carpenter","datetest7":"N","datetest8":"USD","datetest9":"S","datetest10":"623456765"},
+//{"datetest":"12/18 : 0837","datetest1":"9.41","datetest2":"2020061521","datetest3":"4012xxxxxxxx6876","datetest4":"D","datetest5":"5400758191","datetest6":"Hill Perkins","datetest7":"N","datetest8":"USD","datetest9":"D","datetest10":"023456765"},
+//{"datetest":"12/17 : 2122","datetest1":"1.99","datetest2":"2020200048","datetest3":"4012xxxxxxxx4827","datetest4":"D","datetest5":"5400400643","datetest6":"Walker Morrison","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"8823456765"},
+//{"datetest":"12/17 : 2141","datetest1":"59.29","datetest2":"2020663123","datetest3":"4012xxxxxxxx2964","datetest4":"D","datetest5":"5400260569","datetest6":"Anderson Peterson","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"423456765"},
+{"datetest":"12/17 : 2050","datetest1":"65.48","datetest2":"2020146937","datetest3":"4012xxxxxxxx7901","datetest4":"D","datetest5":"5400969332","datetest6":"Wright Davidson","datetest7":"N","datetest8":"USD","datetest9":"S","datetest10":"623456765"},
+//{"datetest":"12/17 : 2031","datetest1":"8.68","datetest2":"2020028033","datetest3":"4012xxxxxxxx0277","datetest4":"D","datetest5":"5400835810","datetest6":"Webb Watts","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"7523456765"},
+{"datetest":"12/17 : 2028","datetest1":"2.48","datetest2":"2020236883","datetest3":"4012xxxxxxxx9040","datetest4":"D","datetest5":"5400671802","datetest6":"Thomson Joseph","datetest7":"N","datetest8":"USD","datetest9":"S","datetest10":"333456765"},
+//{"datetest":"12/17 : 1819","datetest1":"51.57","datetest2":"2020565945","datetest3":"4012xxxxxxxx2839","datetest4":"D","datetest5":"5400092277","datetest6":"Wm Blair","datetest7":"N","datetest8":"USD","datetest9":"V","datetest10":"123450865"},
+//{"datetest":"12/17 : 1812","datetest1":"87.58","datetest2":"2020549991","datetest3":"4012xxxxxxxx5734","datetest4":"D","datetest5":"5400432256","datetest6":"Lincoln Edward","datetest7":"N","datetest8":"USD","datetest9":"P","datetest10":"453456765"},
+//{"datetest":"12/17 : 1735","datetest1":"44.86","datetest2":"2020242317","datetest3":"4012xxxxxxxx0852","datetest4":"D","datetest5":"5400264043","datetest6":"Gordon Stanley","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"453456565"},
+{"datetest":"12/17 : 1642","datetest1":"11.25","datetest2":"2020338185","datetest3":"4012xxxxxxxx5945","datetest4":"D","datetest5":"5400560726","datetest6":"Wheeler Bros","datetest7":"N","datetest8":"USD","datetest9":"S","datetest10":"453456565"},
+//{"datetest":"12/17 : 1535","datetest1":"45.47","datetest2":"2020525498","datetest3":"4012xxxxxxxx2346","datetest4":"D","datetest5":"5400508214","datetest6":"Street Kerr","datetest7":"N","datetest8":"USD","datetest9":"D","datetest10":"453454565"},
+//{"datetest":"12/17 : 1525","datetest1":"16.10","datetest2":"2020770494","datetest3":"4012xxxxxxxx1025","datetest4":"D","datetest5":"5400888056","datetest6":"Perry Sutton","datetest7":"N","datetest8":"USD","datetest9":"H","datetest10":"453454563"},
+]
+$scope.myFunc1 = function(data) {
+ $scope.name ="02/17/2017 - 05/17/2017";
+ $scope.name1 = "$305,852.56";
+ $scope.name2 = "$414,894.44";
+ $scope.name3 = "$345,041.56";
+ $scope.name4 = "$69,852.88";
+  $scope.customer = [{
+        "datetest" : "02/17 : 0961",
+        "datetest1" : "12.13",
+        "datetest2" : "7546",
+		"datetest3" : "4012xxxxxxxx2065",
+        "datetest4" : "D",
+        "datetest5" : "5400752278",
+		"datetest6" : "Smith College",
+		"datetest7" : "N",
+		"datetest8" : "USD",
+		"datetest9" : "S",
+		"datetest10" : "876456423",
+},
+//{"datetest":"05/17 : 1739","datetest1":"89.81","datetest2":"2020333997","datetest3":"4012xxxxxxxx5494","datetest4":"D","datetest5":"5400642155","datetest6":"Mc Pearson","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"453454563"},
+{"datetest":"05/17 : 0513","datetest1":"98.67","datetest2":"2020301444","datetest3":"4012xxxxxxxx6234","datetest4":"D","datetest5":"5400802655","datetest6":"Edwards Brien","datetest7":"N","datetest8":"USD","datetest9":"S","datetest10":"3534545612"},
+//{"datetest":"05/17 : 0054","datetest1":"29.70","datetest2":"2020414933","datetest3":"4012xxxxxxxx4660","datetest4":"D","datetest5":"5400765901","datetest6":"Morris Williamson","datetest7":"N","datetest8":"USD","datetest9":"D","datetest10":"4534545612"},
+//{"datetest":"04/17 : 1915","datetest1":"9.21","datetest2":"2020073715","datetest3":"4012xxxxxxxx4239","datetest4":"D","datetest5":"5400111226","datetest6":"Mitchell Nichols","datetest7":"N","datetest8":"USD","datetest9":"H","datetest10":"6534545612"},
+{"datetest":"04/17 : 2220","datetest1":"8.80","datetest2":"2020353987","datetest3":"4012xxxxxxxx5444","datetest4":"D","datetest5":"5400704444","datetest6":"Bell Wilkinson","datetest7":"N","datetest8":"USD","datetest9":"S","datetest10":"5534545612"},
+//{"datetest":"04/17 : 1831","datetest1":"83.25","datetest2":"2020053934","datetest3":"4012xxxxxxxx2297","datetest4":"D","datetest5":"5400550497","datetest6":"Ward Ball","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"5534545612"},
+//{"datetest":"04/17 : 1755","datetest1":"22.60","datetest2":"2020649774","datetest3":"4012xxxxxxxx5972","datetest4":"D","datetest5":"5400778736","datetest6":"Watson Burton","datetest7":"N","datetest8":"USD","datetest9":"V","datetest10":"7534545612"},
+//{"datetest":"04/17 : 2333","datetest1":"28.24","datetest2":"2020192706","datetest3":"4012xxxxxxxx5867","datetest4":"D","datetest5":"5400108517","datetest6":"Morgan Morton","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"153456765"},
+//{"datetest":"04/17 : 1400","datetest1":"4.04","datetest2":"2020188713","datetest3":"4012xxxxxxxx6318","datetest4":"D","datetest5":"5400727261","datetest6":"Davies Bryan","datetest7":"N","datetest8":"USD","datetest9":"P","datetest10":"123656765"},
+//{"datetest":"03/17 : 2100","datetest1":"55.39","datetest2":"2020133059","datetest3":"4012xxxxxxxx5021","datetest4":"D","datetest5":"5400901348","datetest6":"Cooper Sherman","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"423456765"},
+//{"datetest":"03/17 : 1904","datetest1":"73.12","datetest2":"2020051164","datetest3":"4012xxxxxxxx3862","datetest4":"D","datetest5":"5400497653","datetest6":"Phillips Berry","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"323456765"},
+//{"datetest":"03/17 : 0944","datetest1":"87.74","datetest2":"2020120361","datetest3":"4012xxxxxxxx6067","datetest4":"D","datetest5":"5400953543","datetest6":"Rogers Warner","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"143456765"},
+//{"datetest":"03/17 : 0057","datetest1":"17.53","datetest2":"2020184651","datetest3":"4012xxxxxxxx8824","datetest4":"D","datetest5":"5400427489","datetest6":"Gray Pratt","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"124456765"},
+//{"datetest":"03/17 : 0124","datetest1":"51.24","datetest2":"2020487408","datetest3":"4012xxxxxxxx2450","datetest4":"D","datetest5":"5400185484","datetest6":"Hughes Gilbert","datetest7":"N","datetest8":"USD","datetest9":"H","datetest10":"133456765"},
+//{"datetest":"03/17 : 0435","datetest1":"34.73","datetest2":"2020934572","datetest3":"4012xxxxxxxx0922","datetest4":"D","datetest5":"5400222850","datetest6":"Harrison Booth","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"153456765"},
+{"datetest":"02/17 : 1046","datetest1":"84.76","datetest2":"2020473449","datetest3":"4012xxxxxxxx0460","datetest4":"D","datetest5":"5400247690","datetest6":"Carter Hudson","datetest7":"N","datetest8":"USD","datetest9":"S","datetest10":"163456765"},
+{"datetest":"02/17 : 1201","datetest1":"89.02","datetest2":"2020718389","datetest3":"4012xxxxxxxx0511","datetest4":"D","datetest5":"5400156213","datetest6":"Murphy Frank","datetest7":"N","datetest8":"USD","datetest9":"V","datetest10":"153456765"},
+{"datetest":"02/17 : 1841","datetest1":"91.11","datetest2":"2020965726","datetest3":"4012xxxxxxxx0039","datetest4":"D","datetest5":"5400585729","datetest6":"Collins Walsh","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"173456765"},
+{"datetest":"02/17 : 2013","datetest1":"88.17","datetest2":"2020174037","datetest3":"4012xxxxxxxx3019","datetest4":"D","datetest5":"5400600093","datetest6":"Henry Dean","datetest7":"N","datetest8":"USD","datetest9":"P","datetest10":"123456765"},
+/*{"datetest":"03/17 : 0145","datetest1":"27.25","datetest2":"2020728017","datetest3":"4012xxxxxxxx0076","datetest4":"D","datetest5":"5400856649","datetest6":"Foster Austin","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"123456765"},
+{"datetest":"03/17 : 0146","datetest1":"83.78","datetest2":"2020153208","datetest3":"4012xxxxxxxx3558","datetest4":"D","datetest5":"5400233837","datetest6":"Richardson Burke","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"123456765"},
+{"datetest":"03/17 : 0843","datetest1":"3.12","datetest2":"2020992256","datetest3":"4012xxxxxxxx6360","datetest4":"D","datetest5":"5400942437","datetest6":"Russell Matthews","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"123456765"},
+{"datetest":"03/17 : 0736","datetest1":"89.09","datetest2":"2020663293","datetest3":"4012xxxxxxxx6986","datetest4":"D","datetest5":"5400613165","datetest6":"Hamilton Boyd","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"123456765"},
+{"datetest":"03/17 : 0627","datetest1":"27.93","datetest2":"2020008387","datetest3":"4012xxxxxxxx4536","datetest4":"D","datetest5":"5400932713","datetest6":"Shaw Dawson","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"123456765"},
+{"datetest":"03/17 : 0627","datetest1":"45.89","datetest2":"2020023202","datetest3":"4012xxxxxxxx2603","datetest4":"D","datetest5":"5400105408","datetest6":"Bennett Coleman","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"123456765"},
+{"datetest":"03/17 : 0627","datetest1":"74.88","datetest2":"2020664588","datetest3":"4012xxxxxxxx7353","datetest4":"D","datetest5":"5400010687","datetest6":"Howard Stevenson","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"123456765"},
+{"datetest":"03/17 : 0627","datetest1":"42.55","datetest2":"2020406870","datetest3":"4012xxxxxxxx3952","datetest4":"D","datetest5":"5400104976","datetest6":"Reed Parsons","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"123456765"},
+{"datetest":"03/17 : 0627","datetest1":"97.12","datetest2":"2020629984","datetest3":"4012xxxxxxxx5583","datetest4":"D","datetest5":"5400741339","datetest6":"Fisher Francis","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"123456765"},
+{"datetest":"03/17 : 0627","datetest1":"20.64","datetest2":"2020385440","datetest3":"4012xxxxxxxx6326","datetest4":"D","datetest5":"5400762826","datetest6":"Marshall Griffin","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"123456765"},
+{"datetest":"03/17 : 0627","datetest1":"1.55","datetest2":"2020408725","datetest3":"4012xxxxxxxx1172","datetest4":"D","datetest5":"5400209027","datetest6":"May Sharp","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"123456765"},
+{"datetest":"03/17 : 0627","datetest1":"92.26","datetest2":"2020362898","datetest3":"4012xxxxxxxx4527","datetest4":"D","datetest5":"5400352270","datetest6":"Church Gould","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"123456765"},
+{"datetest":"03/17 : 0627","datetest1":"89.28","datetest2":"2020295786","datetest3":"4012xxxxxxxx2984","datetest4":"D","datetest5":"5400189518","datetest6":"Washington Barrett","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"123456765"},
+{"datetest":"03/17 : 0627","datetest1":"75.28","datetest2":"2020931393","datetest3":"4012xxxxxxxx8738","datetest4":"D","datetest5":"5400426175","datetest6":"Kelly Charles","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"123456765"},
+{"datetest":"03/17 : 0627","datetest1":"24.15","datetest2":"2020619495","datetest3":"4012xxxxxxxx3885","datetest4":"D","datetest5":"5400539398","datetest6":"Price Newman","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"123456765"},
+{"datetest":"03/17 : 0627","datetest1":"24.18","datetest2":"2020297006","datetest3":"4012xxxxxxxx8262","datetest4":"D","datetest5":"5400086567","datetest6":"Murray Hawkins","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"123456765"},
+{"datetest":"03/17 : 0627","datetest1":"98.95","datetest2":"2020160325","datetest3":"4012xxxxxxxx3094","datetest4":"D","datetest5":"5400008646","datetest6":"William Oliver","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"123456765"},
+{"datetest":"03/17 : 0627","datetest1":"31.88","datetest2":"2020817515","datetest3":"4012xxxxxxxx6008","datetest4":"D","datetest5":"5400120583","datetest6":"Palmer Cunningham","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"123456765"},
+{"datetest":"03/17 : 0627","datetest1":"2.37","datetest2":"2020536882","datetest3":"4012xxxxxxxx4288","datetest4":"D","datetest5":"5400235919","datetest6":"Stevens Snyder","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"123456765"},
+{"datetest":"03/17 : 0627","datetest1":"16.37","datetest2":"2020509789","datetest3":"4012xxxxxxxx8488","datetest4":"D","datetest5":"5400646032","datetest6":"Cox Bates","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"123456765"},
+{"datetest":"03/17 : 0627","datetest1":"75.05","datetest2":"2020123902","datetest3":"4012xxxxxxxx8654","datetest4":"D","datetest5":"5400648087","datetest6":"Robertson Franklin","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"123456765"},
+{"datetest":"03/17 : 0627","datetest1":"65.61","datetest2":"2020831883","datetest3":"4012xxxxxxxx9772","datetest4":"D","datetest5":"5400764725","datetest6":"Miss Marsh","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"123456765"},
+{"datetest":"03/17 : 0627","datetest1":"40.12","datetest2":"2020019911","datetest3":"4012xxxxxxxx3819","datetest4":"D","datetest5":"5400391299","datetest6":"Clarke Norton","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"123456765"},
+{"datetest":"03/17 : 0627","datetest1":"26.15","datetest2":"2020836753","datetest3":"4012xxxxxxxx7126","datetest4":"D","datetest5":"5400117167","datetest6":"Bailey Howe","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"123456765"},
+{"datetest":"03/17 : 0985","datetest1":"28.78","datetest2":"2020538345","datetest3":"4012xxxxxxxx2603","datetest4":"D","datetest5":"5400731561","datetest6":"George Fowler","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"123456765"},
+{"datetest":"03/17 : 0985","datetest1":"31.40","datetest2":"2020949791","datetest3":"4012xxxxxxxx2843","datetest4":"D","datetest5":"5400560861","datetest6":"Nelson Geo","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"123456765"},
+{"datetest":"03/17 : 0985","datetest1":"63.53","datetest2":"2020934087","datetest3":"4012xxxxxxxx6434","datetest4":"D","datetest5":"5400829775","datetest6":"Mason Holland","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"123456765"},
+{"datetest":"03/17 : 0985","datetest1":"14.90","datetest2":"2020972663","datetest3":"4012xxxxxxxx4273","datetest4":"D","datetest5":"5400183075","datetest6":"Butler Carroll","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"123456765"},
+{"datetest":"04/17 : 0985","datetest1":"9.35","datetest2":"2020997680","datetest3":"4012xxxxxxxx8792","datetest4":"D","datetest5":"5400080765","datetest6":"Henderson Cameron","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"123456765"},
+{"datetest":"04/17 : 0985","datetest1":"62.31","datetest2":"2020309090","datetest3":"4012xxxxxxxx1080","datetest4":"D","datetest5":"5400230449","datetest6":"Ross Harper","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"123456765"},
+{"datetest":"04/17 : 0985","datetest1":"86.25","datetest2":"2020387285","datetest3":"4012xxxxxxxx3027","datetest4":"D","datetest5":"5400395280","datetest6":"Stone Simmons","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"123456765"},
+{"datetest":"04/17 : 0985","datetest1":"37.67","datetest2":"2020554931","datetest3":"4012xxxxxxxx5167","datetest4":"D","datetest5":"5400277158","datetest6":"Porter Barber","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"123456765"},
+{"datetest":"04/17 : 0985","datetest1":"37.54","datetest2":"2020076602","datetest3":"4012xxxxxxxx6220","datetest4":"D","datetest5":"5400844490","datetest6":"Wallace Barton","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"123456765"},
+{"datetest":"04/17 : 0985","datetest1":"70.49","datetest2":"2020117862","datetest3":"4012xxxxxxxx6072","datetest4":"D","datetest5":"5400797358","datetest6":"Kennedy Little","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"123456765"},
+{"datetest":"04/17 : 0985","datetest1":"39.66","datetest2":"2020922770","datetest3":"4012xxxxxxxx4549","datetest4":"D","datetest5":"5400064956","datetest6":"Gibson Lynch","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"123456765"},
+{"datetest":"04/17 : 0985","datetest1":"56.22","datetest2":"2020497022","datetest3":"4012xxxxxxxx7658","datetest4":"D","datetest5":"5400439274","datetest6":"West Mann","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"123456765"},
+{"datetest":"04/17 : 0985","datetest1":"38.39","datetest2":"2020886569","datetest3":"4012xxxxxxxx0133","datetest4":"D","datetest5":"5400354038","datetest6":"Brooks Holt","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"123456765"},
+{"datetest":"04/17 : 0985","datetest1":"8.91","datetest2":"2020385055","datetest3":"4012xxxxxxxx2668","datetest4":"D","datetest5":"5400658602","datetest6":"Ellis Sanders","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"123456765"},
+{"datetest":"04/17 : 0985","datetest1":"85.70","datetest2":"2020046897","datetest3":"4012xxxxxxxx6683","datetest4":"D","datetest5":"5400531275","datetest6":"Barnes Connor","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"123456765"},
+{"datetest":"04/17 : 0985","datetest1":"17.02","datetest2":"2020721175","datetest3":"4012xxxxxxxx8915","datetest4":"D","datetest5":"5400467786","datetest6":"Johnston Cross","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"123456765"},
+{"datetest":"04/17 : 0985","datetest1":"8.51","datetest2":"2020726540","datetest3":"4012xxxxxxxx1313","datetest4":"D","datetest5":"5400384141","datetest6":"Sullivan Craig","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"123456765"},
+{"datetest":"04/17 : 0985","datetest1":"50.95","datetest2":"2020001118","datetest3":"4012xxxxxxxx5600","datetest4":"D","datetest5":"5400243423","datetest6":"Wells Jordan","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"123456765"},
+{"datetest":"04/17 : 0265","datetest1":"84.33","datetest2":"2020907363","datetest3":"4012xxxxxxxx6419","datetest4":"D","datetest5":"5400996926","datetest6":"Hart Elizabeth","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"123456765"},
+{"datetest":"04/17 : 0265","datetest1":"94.88","datetest2":"2020736818","datetest3":"4012xxxxxxxx2869","datetest4":"D","datetest5":"5400771066","datetest6":"Ford Clay","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"123456765"},
+{"datetest":"04/17 : 0265","datetest1":"41.84","datetest2":"2020778892","datetest3":"4012xxxxxxxx7646","datetest4":"D","datetest5":"5400712417","datetest6":"Reynolds Bryant","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"123456765"},
+{"datetest":"04/17 : 0265","datetest1":"40.11","datetest2":"2020397771","datetest3":"4012xxxxxxxx6537","datetest4":"D","datetest5":"5400149331","datetest6":"Alexander Peters","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"123456765"},
+{"datetest":"04/17 : 0265","datetest1":"93.09","datetest2":"2020885185","datetest3":"4012xxxxxxxx2935","datetest4":"D","datetest5":"5400773926","datetest6":"Co Riley","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"123456765"},
+{"datetest":"04/17 : 0265","datetest1":"4.44","datetest2":"2020091716","datetest3":"4012xxxxxxxx5293","datetest4":"D","datetest5":"5400579137","datetest6":"Cole Saunders","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"123456765"},
+{"datetest":"04/17 : 0265","datetest1":"61.82","datetest2":"2020145849","datetest3":"4012xxxxxxxx1915","datetest4":"D","datetest5":"5400294102","datetest6":"Fox Welch","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"123456765"},
+{"datetest":"04/17 : 0265","datetest1":"50.51","datetest2":"2020993736","datetest3":"4012xxxxxxxx6056","datetest4":"D","datetest5":"5400979649","datetest6":"Holmes Willis","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"123456765"},
+{"datetest":"04/17 : 0265","datetest1":"76.56","datetest2":"2020647304","datetest3":"4012xxxxxxxx2298","datetest4":"D","datetest5":"5400549857","datetest6":"Day Hammond","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"123456765"},
+{"datetest":"04/17 : 0265","datetest1":"39.76","datetest2":"2020155861","datetest3":"4012xxxxxxxx8711","datetest4":"D","datetest5":"5400981595","datetest6":"Chapman Robert","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"123456765"},
+{"datetest":"04/17 : 0265","datetest1":"79.00","datetest2":"2020183800","datetest3":"4012xxxxxxxx6314","datetest4":"D","datetest5":"5400101504","datetest6":"Powell Paul","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"123456765"},
+{"datetest":"04/17 : 0265","datetest1":"66.29","datetest2":"2020572146","datetest3":"4012xxxxxxxx7393","datetest4":"D","datetest5":"5400185430","datetest6":"Webster Cooke","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"123456765"},
+{"datetest":"04/17 : 0265","datetest1":"18.21","datetest2":"2020652507","datetest3":"4012xxxxxxxx8657","datetest4":"D","datetest5":"5400349331","datetest6":"Long Buchanan","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"123456765"},
+{"datetest":"04/17 : 0265","datetest1":"42.01","datetest2":"2020394604","datetest3":"4012xxxxxxxx4934","datetest4":"D","datetest5":"5400198200","datetest6":"Richards Bruce","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"123456765"},
+{"datetest":"04/17 : 0265","datetest1":"8.64","datetest2":"2020430404","datetest3":"4012xxxxxxxx1809","datetest4":"D","datetest5":"5400787014","datetest6":"Grant Hay","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"123456765"},
+{"datetest":"04/17 : 0265","datetest1":"2.43","datetest2":"2020734677","datetest3":"4012xxxxxxxx6531","datetest4":"D","datetest5":"5400455017","datetest6":"Hunter Fleming","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"123456765"},
+{"datetest":"04/17 : 0265","datetest1":"83.97","datetest2":"2020359409","datetest3":"4012xxxxxxxx1905","datetest4":"D","datetest5":"5400892995","datetest6":"Black Howell","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"123456765"},
+{"datetest":"04/17 : 0265","datetest1":"66.07","datetest2":"2020779172","datetest3":"4012xxxxxxxx0618","datetest4":"D","datetest5":"5400482148","datetest6":"Lane Weaver","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"123456765"},
+{"datetest":"04/17 : 0265","datetest1":"72.11","datetest2":"2020249095","datetest3":"4012xxxxxxxx2283","datetest4":"D","datetest5":"5400964300","datetest6":"Gardner Lamb","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"123456765"},
+{"datetest":"04/17 : 0265","datetest1":"73.44","datetest2":"2020790523","datetest3":"4012xxxxxxxx7100","datetest4":"D","datetest5":"5400343580","datetest6":"City Owens","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"123456765"},
+{"datetest":"04/17 : 0265","datetest1":"89.55","datetest2":"2020435600","datetest3":"4012xxxxxxxx2090","datetest4":"D","datetest5":"5400248891","datetest6":"Lawrence Todd","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"123456765"},
+{"datetest":"04/17 : 0265","datetest1":"28.91","datetest2":"2020685126","datetest3":"4012xxxxxxxx9274","datetest4":"D","datetest5":"5400780635","datetest6":"Andrews Roosevelt","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"123456765"},
+{"datetest":"04/17 : 0265","datetest1":"91.72","datetest2":"2020281404","datetest3":"4012xxxxxxxx5199","datetest4":"D","datetest5":"5400890002","datetest6":"Warren David","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"123456765"},
+{"datetest":"04/17 : 0265","datetest1":"87.25","datetest2":"2020818386","datetest3":"4012xxxxxxxx3440","datetest4":"D","datetest5":"5400896140","datetest6":"Spencer Greene","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"123456765"},
+{"datetest":"04/17 : 0265","datetest1":"34.98","datetest2":"2020399693","datetest3":"4012xxxxxxxx1567","datetest4":"D","datetest5":"5400056150","datetest6":"Rice Leonard","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"123456765"},
+{"datetest":"04/17 : 0265","datetest1":"66.58","datetest2":"2020297737","datetest3":"4012xxxxxxxx7946","datetest4":"D","datetest5":"5400938856","datetest6":"Jenkins Walter","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"123456765"},
+{"datetest":"04/17 : 0265","datetest1":"56.12","datetest2":"2020078966","datetest3":"4012xxxxxxxx3701","datetest4":"D","datetest5":"5400911549","datetest6":"Knight Gregory","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"123456765"},
+{"datetest":"04/17 : 0265","datetest1":"11.81","datetest2":"2020587552","datetest3":"4012xxxxxxxx0436","datetest4":"D","datetest5":"5400342080","datetest6":"Armstrong Hicks","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"123456765"},
+{"datetest":"04/17 : 0265","datetest1":"5.58","datetest2":"2020173095","datetest3":"4012xxxxxxxx3584","datetest4":"D","datetest5":"5400528921","datetest6":"Burns Montgomery","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"123456765"},
+{"datetest":"04/17 : 0265","datetest1":"5.74","datetest2":"2020404066","datetest3":"4012xxxxxxxx4145","datetest4":"D","datetest5":"5400018170","datetest6":"Barker Abbott","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"123456765"},
+{"datetest":"04/17 : 0265","datetest1":"64.01","datetest2":"2020425877","datetest3":"4012xxxxxxxx1567","datetest4":"D","datetest5":"5400641132","datetest6":"Dunn Miles","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"123456765"},
+{"datetest":"04/17 : 0265","datetest1":"26.71","datetest2":"2020919854","datetest3":"4012xxxxxxxx6886","datetest4":"D","datetest5":"5400819225","datetest6":"Reid Blake","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"123456765"},
+*/
+	]
+}
+$scope.myFunc2 = function(data) {
+ $scope.name ="01/17/2016 - 01/17/2017";
+ $scope.name1 = "$1473,043.75";
+ $scope.name2 = "$1673,043.75";
+ $scope.name3 = "$982,041.00";
+ $scope.name4 = "$691,001.75";
+$scope.customer = [
+//{"datetest":"02/16 : 1123","datetest1":"82.91","datetest2":"2020426094","datetest3":"4012xxxxxxxx5847","datetest4":"D","datetest5":"5400396304","datetest6":"Thomas Fuller","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"193456765"},
+{"datetest":"03/16 : 2229","datetest1":"9.41","datetest2":"2020061521","datetest3":"4012xxxxxxxx6876","datetest4":"D","datetest5":"5400758191","datetest6":"Hill Perkins","datetest7":"N","datetest8":"USD","datetest9":"S","datetest10":"93456765"},
+//{"datetest":"04/16 : 0455","datetest1":"1.99","datetest2":"2020200048","datetest3":"4012xxxxxxxx4827","datetest4":"D","datetest5":"5400400643","datetest6":"Walker Morrison","datetest7":"N","datetest8":"USD","datetest9":"D","datetest10":"823456765"},
+//{"datetest":"04/16 : 1444","datetest1":"59.29","datetest2":"2020663123","datetest3":"4012xxxxxxxx2964","datetest4":"D","datetest5":"5400260569","datetest6":"Anderson Peterson","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"723456765"},
+//{"datetest":"05/16 : 0621","datetest1":"65.48","datetest2":"2020146937","datetest3":"4012xxxxxxxx7901","datetest4":"D","datetest5":"5400969332","datetest6":"Wright Davidson","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"723456765"},
+//{"datetest":"05/16 : 2348","datetest1":"81.29","datetest2":"2020029291","datetest3":"4012xxxxxxxx8609","datetest4":"D","datetest5":"5400898744","datetest6":"Martin Ferguson","datetest7":"N","datetest8":"USD","datetest9":"H","datetest10":"523456765"},
+//{"datetest":"06/16 : 1914","datetest1":"05.12","datetest2":"2020322232","datetest3":"4012xxxxxxxx3430","datetest4":"D","datetest5":"5400944589","datetest6":"Wood Park","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"323456765"},
+{"datetest":"06/16 : 1744","datetest1":"14.01","datetest2":"2020997853","datetest3":"4012xxxxxxxx8540","datetest4":"D","datetest5":"5400057732","datetest6":"Allen Myers","datetest7":"N","datetest8":"USD","datetest9":"S","datetest10":"223456765"},
+//{"datetest":"07/16 : 1448","datetest1":"41.80","datetest2":"2020771480","datetest3":"4012xxxxxxxx2745","datetest4":"D","datetest5":"5400892024","datetest6":"Robinson Ryan","datetest7":"N","datetest8":"USD","datetest9":"V","datetest10":"923456765"},
+//{"datetest":"07/16 : 1927","datetest1":"14.59","datetest2":"2020013005","datetest3":"4012xxxxxxxx9526","datetest4":"D","datetest5":"5400463156","datetest6":"Lewis Freeman","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"023456765"},
+//{"datetest":"08/16 : 1406","datetest1":"74.54","datetest2":"2020330914","datetest3":"4012xxxxxxxx3063","datetest4":"D","datetest5":"5400370880","datetest6":"Scott Pierce","datetest7":"N","datetest8":"USD","datetest9":"P","datetest10":"4323456765"},
+{"datetest":"08/16 : 0458","datetest1":"37.18","datetest2":"2020704053","datetest3":"4012xxxxxxxx0801","datetest4":"D","datetest5":"5400348092","datetest6":"Young Fellows","datetest7":"N","datetest8":"USD","datetest9":"S","datetest10":"323456765"},
+//{"datetest":"09/16 : 0457","datetest1":"99.72","datetest2":"2020601986","datetest3":"4012xxxxxxxx4530","datetest4":"D","datetest5":"5400385582","datetest6":"Jackson Douglas","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"993456765"},
+//{"datetest":"09/16 : 0456","datetest1":"38.11","datetest2":"2020195142","datetest3":"4012xxxxxxxx1153","datetest4":"D","datetest5":"5400865873","datetest6":"Adams Tucker","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"763456765"},
+//{"datetest":"10/17 : 2153","datetest1":"83.71","datetest2":"2020468713","datetest3":"4012xxxxxxxx3114","datetest4":"D","datetest5":"5400200015","datetest6":"Tryniski Dixon","datetest7":"N","datetest8":"USD","datetest9":"P","datetest10":"643456765"},
+//{"datetest":"11/17 : 0454","datetest1":"72.69","datetest2":"2020002698","datetest3":"4012xxxxxxxx5142","datetest4":"D","datetest5":"5400091308","datetest6":"Green Bradley","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"123456765"},
+//{"datetest":"11/17 : 2203","datetest1":"03.42","datetest2":"2020929994","datetest3":"4012xxxxxxxx9851","datetest4":"D","datetest5":"5400021910","datetest6":"Evans Hopkins","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"123456765"},
+//{"datetest":"12/17 : 0964","datetest1":"40.05","datetest2":"2020999906","datetest3":"4012xxxxxxxx4341","datetest4":"D","datetest5":"5400341655","datetest6":"King Potter","datetest7":"N","datetest8":"USD","datetest9":"V","datetest10":"163456765"},
+//{"datetest":"12/17 : 1754","datetest1":"47.39","datetest2":"2020965797","datetest3":"4012xxxxxxxx6719","datetest4":"D","datetest5":"5400887172","datetest6":"Baker Lloyd","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"124456765"},
+{"datetest":"01/17 : 0961","datetest1":"88.35","datetest2":"2020540428","datetest3":"4012xxxxxxxx3773","datetest4":"D","datetest5":"5400261270","datetest6":"John Owen","datetest7":"N","datetest8":"USD","datetest9":"S","datetest10":"123956765"},
+
+	]
+}
+$scope.myFunc = function(data) {
+ $scope.name =  "06/17/2017 - 07/30/2017";
+ $scope.name1 = "$65,672.56";
+ $scope.name2 = "$102,041.56";
+ $scope.name3 = "$95,041.56";
+ $scope.name4 = "$7,000.00";
+		  $scope.customer = [
+//{"datetest":"07/30 : 0732","datetest1":"78.74","datetest2":"2020255121","datetest3":"4012xxxxxxxx9816","datetest4":"D","datetest5":"5400038427","datetest6":"Miller Patterson","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"564456765"},
+{"datetest":"07/26 : 0842","datetest1":"72.81","datetest2":"2020407801","datetest3":"4012xxxxxxxx0102","datetest4":"D","datetest5":"5400462557","datetest6":"Taylor Ann","datetest7":"N","datetest8":"USD","datetest9":"S","datetest10":"663456765"},
+//{"datetest":"07/22 : 0132","datetest1":"78.76","datetest2":"2020389992","datetest3":"4012xxxxxxxx7879","datetest4":"D","datetest5":"5400856828","datetest6":"Wilson Crawford","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"433456765"},
+//{"datetest":"07/18 : 0437","datetest1":"7.94","datetest2":"2020258551","datetest3":"4012xxxxxxxx0790","datetest4":"D","datetest5":"5400265887","datetest6":"Brown Hayes","datetest7":"N","datetest8":"USD","datetest9":"D","datetest10":"543456765"},
+//{"datetest":"07/17 : 0926","datetest1":"63.28","datetest2":"2020848042","datetest3":"4012xxxxxxxx8213","datetest4":"D","datetest5":"5400635871","datetest6":"Davis Arnold","datetest7":"N","datetest8":"USD","datetest9":"H","datetest10":"423456765"},
+//{"datetest":"07/14 : 0803","datetest1":"1.44","datetest2":"2020764737","datetest3":"4012xxxxxxxx3569","datetest4":"D","datetest5":"5400312638","datetest6":"Johnson Page","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"743456765"},
+{"datetest":"07/13 : 0025","datetest1":"8.76","datetest2":"2020673284","datetest3":"4012xxxxxxxx1618","datetest4":"D","datetest5":"5400151539","datetest6":"Williams Rose","datetest7":"N","datetest8":"USD","datetest9":"S","datetest10":"123456765"},
+//{"datetest":"07/09 : 0914","datetest1":"55.72","datetest2":"2020457844","datetest3":"4012xxxxxxxx8718","datetest4":"D","datetest5":"5400513025","datetest6":"White House","datetest7":"N","datetest8":"USD","datetest9":"V","datetest10":"123956765"},
+//{"datetest":"07/06 : 0913","datetest1":"66.42","datetest2":"2020651004","datetest3":"4012xxxxxxxx8048","datetest4":"D","datetest5":"5400615343","datetest6":"Clark Fletcher","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"128456765"},
+//{"datetest":"07/03 : 0921","datetest1":"59.25","datetest2":"2020919667","datetest3":"4012xxxxxxxx6653","datetest4":"D","datetest5":"5400101546","datetest6":"Hall Harvey","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"173456765"},		
+//{"datetest":"07/01 : 0432","datetest1":"9.35","datetest2":"2020242227","datetest3":"4012xxxxxxxx3942","datetest4":"D","datetest5":"5400390610","datetest6":"Harris Payne","datetest7":"N","datetest8":"USD","datetest9":"P","datetest10":"163456765"},
+//{"datetest":"06/17 : 0514","datetest1":"40.05","datetest2":"2020812202","datetest3":"4012xxxxxxxx3236","datetest4":"D","datetest5":"5400162448","datetest6":"Roberts Curtis","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"153456765"},
+{"datetest":"06/17 : 0819","datetest1":"59.00","datetest2":"2020913423","datetest3":"4012xxxxxxxx7447","datetest4":"D","datetest5":"5400172384","datetest6":"Campbell Newton","datetest7":"N","datetest8":"USD","datetest9":"S","datetest10":"143456765"},
+//{"datetest":"06/17 : 0723","datetest1":"88.90","datetest2":"2020928448","datetest3":"4012xxxxxxxx6824","datetest4":"D","datetest5":"5400327408","datetest6":"James Woods","datetest7":"N","datetest8":"USD","datetest9":"D","datetest10":"133456765"},
+//{"datetest":"06/17 : 0220","datetest1":"46.95","datetest2":"2020890051","datetest3":"4012xxxxxxxx8340","datetest4":"D","datetest5":"5400135255","datetest6":"Stewart Carr","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"123456765"},
+//{"datetest":"06/17 : 0114","datetest1":"43.67","datetest2":"2020955057","datetest3":"4012xxxxxxxx3128","datetest4":"D","datetest5":"5400708297","datetest6":"Lee Duncan","datetest7":"N","datetest8":"USD","datetest9":"A","datetest10":"113456765"},
+//{"datetest":"06/17 : 0822","datetest1":"22.76","datetest2":"2020240009","datetest3":"4012xxxxxxxx7821","datetest4":"D","datetest5":"5400617691","datetest6":"County French","datetest7":"N","datetest8":"USD","datetest9":"H","datetest10":"103456765"},
+{"datetest":"06/17 : 0227","datetest1":"70.40","datetest2":"2020201067","datetest3":"4012xxxxxxxx4142","datetest4":"D","datetest5":"5400221563","datetest6":"Turner Baldwin","datetest7":"N","datetest8":"USD","datetest9":"S","datetest10":"320456765"},
+//{"datetest":"06/17 : 0852","datetest1":"40.47","datetest2":"2020561044","datetest3":"4012xxxxxxxx8503","datetest4":"D","datetest5":"5400754720","datetest6":"Parker Field","datetest7":"N","datetest8":"USD","datetest9":"V","datetest10":"33456765"},
+//{"datetest":"06/17 : 0921","datetest1":"87.04","datetest2":"2020562891","datetest3":"4012xxxxxxxx5482","datetest4":"D","datetest5":"5400131231","datetest6":"Cook Bishop","datetest7":"N","datetest8":"USD","datetest9":"P","datetest10":"923456765"},
+]
+};
+
+    
+});
+
+// Get the modal
+var modalFail = document.getElementById('myModalFail');
+
+// Get the button that opens the modal
+
+function OpenModal(){
+modalFail.style.display = "block";
+}
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+span.onclick = function() {
+    //myModalSuccess.style.display = "none";
+	modalFail.style.display = "none";
+}
+window.onclick = function(event) {
+    if (event.target == modal) {
+       // myModalSuccess.style.display = "none";
+		modalFail.style.display = "none";
+    }
+}
+
+function myFunction() {
+    window.print();
+}
+</script>
+</div>
+</body>
+</html>
+
+
+
+
+

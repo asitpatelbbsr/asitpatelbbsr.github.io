@@ -1,0 +1,32 @@
+div {
+	color: red;
+	background-color: lightblue;
+	border-style: double;
+	/* 	margin-left: 80px;<-- space arrangement -> */
+	/* padding-bottom: 50px;// CSS padding properties are used to generate space around content. */
+	height: 100px;
+	width: 100%;
+	outline-color: green;
+	outline-style: dotted;
+	text-align: center;
+	text-decoration: underline;
+	/* 	   text-indent: 10px;//--moving text */
+	/* 	letter-spacing: 3px;//space between the characters in a text. */
+	font-style: italic;
+	font-size: 20px;
+	font-weight: bold;
+}
+
+ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	width: 200px;
+	background-color: yellow;
+	border: 1px solid #00ff00;
+}
+li {
+    display: inline;
+    border:100%;
+}
+
